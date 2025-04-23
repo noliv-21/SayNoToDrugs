@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Say No to Drugs - Kerala Police</title>
+  <title>Say No to Drugs - Youth Against Addiction</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -12,54 +13,224 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    /* Fixed dark background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #0f172a;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(30, 58, 138, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(30, 64, 175, 0.1) 0%, transparent 50%);
+      z-index: -1;
+    }
+
+    /* Remove individual section backgrounds */
+    .scroll-section {
+      background: transparent !important;
+    }
+
+    /* Ensure content is properly visible */
+    .scroll-section .container {
+      padding: 4rem 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Fix scroll section layout */
+    .scroll-section {
+      min-width: 100vw;
+      min-height: 100vh;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 80px 0 40px;
+      /* Space for fixed navbar */
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Horizontal content movement with vertical scrolling */
+    .scroll-section {
+      min-width: 100vw;
+      min-height: 100vh;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 80px 0;
+      /* Space for fixed navbar */
+      scroll-snap-align: start;
+    }
+
+    /* Scroll navigation dots */
+    .scroll-nav {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+    }
+
+    .scroll-nav a {
+      display: block;
+      width: 12px;
+      height: 12px;
+      margin: 10px 0;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .scroll-nav a:hover,
+    .scroll-nav a.active {
+      background-color: #3b82f6;
+      transform: scale(1.3);
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       scroll-behavior: smooth;
-      overflow-x: hidden;
       background-color: #0f172a;
       color: white;
     }
-    
+
+    /* Horizontal content movement with vertical scrolling */
+    .main-container {
+      position: relative;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    .horizontal-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .horizontal-content {
+      position: absolute;
+      display: flex;
+      height: 100%;
+      will-change: transform;
+    }
+
+    /* Section transition effects */
+    .section-transition {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 20%;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .transition-left {
+      left: 0;
+      background: linear-gradient(to right, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0));
+    }
+
+    .transition-right {
+      right: 0;
+      background: linear-gradient(to left, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0));
+    }
+
+    .transition-active {
+      opacity: 1;
+    }
+
+    /* Corner animations */
+    .corner-animation {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.5s ease;
+      transform: scale(0);
+    }
+
+    .corner-top-left {
+      top: 20px;
+      left: 20px;
+      border-top: 3px solid #3b82f6;
+      border-left: 3px solid #3b82f6;
+    }
+
+    .corner-top-right {
+      top: 20px;
+      right: 20px;
+      border-top: 3px solid #3b82f6;
+      border-right: 3px solid #3b82f6;
+    }
+
+    .corner-bottom-left {
+      bottom: 20px;
+      left: 20px;
+      border-bottom: 3px solid #3b82f6;
+      border-left: 3px solid #3b82f6;
+    }
+
+    .corner-bottom-right {
+      bottom: 20px;
+      right: 20px;
+      border-bottom: 3px solid #3b82f6;
+      border-right: 3px solid #3b82f6;
+    }
+
     /* Smooth scrolling */
     html {
       scroll-behavior: smooth;
     }
-    
+
     /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
     }
-    
+
     ::-webkit-scrollbar-track {
       background: #1e293b;
     }
-    
+
     ::-webkit-scrollbar-thumb {
       background: #3b82f6;
       border-radius: 4px;
     }
-    
+
     ::-webkit-scrollbar-thumb:hover {
       background: #2563eb;
     }
-    
+
     /* Animations */
     .animate-fade-in {
       animation: fadeIn 1.5s ease-in-out;
     }
-    
+
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
-    
+
     .fade-up {
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
-    
+
     /* Fallback to ensure content is visible even if JS animations fail */
     @media (prefers-reduced-motion: reduce) {
       .fade-up {
@@ -67,51 +238,51 @@
         transform: translateY(0) !important;
       }
     }
-    
+
     /* Auto-show content after 1 second if JS fails */
     body:not(.js-loaded) .fade-up {
       animation: auto-reveal 1s forwards 1s;
     }
-    
+
     @keyframes auto-reveal {
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-    
+
     .fade-up.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    
+
     /* Card styles */
     .stat-card {
       transition: all 0.3s ease;
       border-left: 4px solid #3b82f6;
     }
-    
+
     .stat-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
-    
+
     /* Hero section */
     .hero-overlay {
-      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/1200x600/?police,drugs') center/cover no-repeat fixed;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/1200x600/?youth,addiction') center/cover no-repeat fixed;
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    
+
     /* Button effects */
     .btn-effect {
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
     }
-    
+
     .btn-effect:after {
       content: '';
       position: absolute;
@@ -122,33 +293,33 @@
       background: rgba(255, 255, 255, 0.1);
       transition: all 0.3s ease;
     }
-    
+
     .btn-effect:hover:after {
       width: 100%;
     }
-    
+
     .btn-report {
       background-color: #dc2626;
     }
-    
+
     .btn-report:hover {
       background-color: #b91c1c;
     }
-    
+
     .btn-learn {
       background-color: #2563eb;
     }
-    
+
     .btn-learn:hover {
       background-color: #1d4ed8;
     }
-    
+
     /* Icon styles */
     #statsSection .icon {
       font-size: 2.5rem;
       color: #3b82f6;
     }
-    
+
     /* Chart styles */
     #factsChart {
       max-width: 400px;
@@ -156,33 +327,82 @@
       margin: 0 auto;
       background: transparent;
     }
-    
+
     /* Section backgrounds */
     .mission-section {
       background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
     }
-    
+
+    /* Gradient transitions between sections */
+    #home {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    }
+
+    #mission {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    }
+
+    #horizontal-section {
+      background: linear-gradient(135deg, #1e40af 0%, #1e293b 100%);
+    }
+
+    #timeline {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
+    .scroll-section:nth-child(5) {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    #drug-effects {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
+    #testimonials {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    #resources {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
+    #faq {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .involvement-section {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
+    .partners-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    #contact {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
     /* Navbar */
     .navbar {
       background-color: rgba(17, 24, 39, 0.95);
       backdrop-filter: blur(10px);
       z-index: 1000;
     }
-    
+
     /* Horizontal scroll section */
     .horizontal-scroll-section {
       height: 100vh;
       overflow: hidden;
       position: relative;
     }
-    
+
     .horizontal-scroll-container {
       display: flex;
       height: 100%;
       position: absolute;
       transition: transform 0.1s ease;
     }
-    
+
     .horizontal-scroll-panel {
       min-width: 100vw;
       padding: 2rem;
@@ -190,14 +410,14 @@
       align-items: center;
       justify-content: center;
     }
-    
+
     /* Timeline section */
     .timeline {
       position: relative;
       max-width: 1200px;
       margin: 0 auto;
     }
-    
+
     .timeline::after {
       content: '';
       position: absolute;
@@ -208,21 +428,21 @@
       left: 50%;
       margin-left: -3px;
     }
-    
+
     .timeline-container {
       padding: 10px 40px;
       position: relative;
       width: 50%;
     }
-    
+
     .timeline-container.left {
       left: 0;
     }
-    
+
     .timeline-container.right {
       left: 50%;
     }
-    
+
     .timeline-container::after {
       content: '';
       position: absolute;
@@ -235,11 +455,11 @@
       border-radius: 50%;
       z-index: 1;
     }
-    
+
     .timeline-container.right::after {
       left: -10px;
     }
-    
+
     .timeline-content {
       padding: 20px;
       background-color: #1e293b;
@@ -247,13 +467,13 @@
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-    
+
     /* Testimonial carousel */
     .testimonial-section {
       background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/600') center/cover no-repeat fixed;
       padding: 6rem 0;
     }
-    
+
     .testimonial-card {
       background-color: rgba(30, 41, 59, 0.9);
       backdrop-filter: blur(10px);
@@ -262,24 +482,24 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
       transition: all 0.3s ease;
     }
-    
+
     .testimonial-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
     }
-    
+
     /* Statistics counter animation */
     .count-up {
       display: inline-block;
     }
-    
+
     /* Drug effects section */
     .drug-effects-section {
       position: relative;
       padding: 6rem 0;
       overflow: hidden;
     }
-    
+
     .drug-effects-bg {
       position: absolute;
       top: 0;
@@ -290,7 +510,7 @@
       z-index: -1;
       filter: brightness(0.3);
     }
-    
+
     .effect-card {
       background-color: rgba(15, 23, 42, 0.9);
       backdrop-filter: blur(8px);
@@ -298,12 +518,12 @@
       overflow: hidden;
       transition: all 0.3s ease;
     }
-    
+
     .effect-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
     }
-    
+
     .effect-card .icon-container {
       width: 60px;
       height: 60px;
@@ -313,7 +533,7 @@
       border-radius: 50%;
       margin-bottom: 1rem;
     }
-    
+
     /* FAQ Section */
     .faq-card {
       background-color: #1e293b;
@@ -323,11 +543,11 @@
       margin-bottom: 1rem;
       transition: all 0.3s ease;
     }
-    
+
     .faq-card:hover {
       box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
     }
-    
+
     .faq-header {
       padding: 1rem 1.5rem;
       cursor: pointer;
@@ -335,31 +555,31 @@
       justify-content: space-between;
       align-items: center;
     }
-    
+
     .faq-body {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s ease;
       padding: 0 1.5rem;
     }
-    
+
     /* This ensures FAQ content is visible even if JavaScript fails */
-    .faq-header:hover + .faq-body {
+    .faq-header:hover+.faq-body {
       max-height: 300px;
       padding-bottom: 1.5rem;
     }
-    
+
     .faq-body.active {
       max-height: 300px;
       padding-bottom: 1.5rem;
     }
-    
+
     /* Community involvement */
     .involvement-section {
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       padding: 6rem 0;
     }
-    
+
     .involvement-card {
       position: relative;
       overflow: hidden;
@@ -367,20 +587,20 @@
       background-color: #1e293b;
       transition: all 0.3s ease;
     }
-    
+
     .involvement-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
-    
+
     .involvement-card img {
       transition: all 0.5s ease;
     }
-    
+
     .involvement-card:hover img {
       transform: scale(1.1);
     }
-    
+
     .involvement-content {
       position: absolute;
       bottom: 0;
@@ -389,13 +609,13 @@
       padding: 1.5rem;
       background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
     }
-    
+
     /* Partners section */
     .partners-section {
       background-color: #0f172a;
       padding: 4rem 0;
     }
-    
+
     .partner-logo {
       height: 80px;
       width: 80px;
@@ -406,12 +626,12 @@
       justify-content: center;
       transition: all 0.3s ease;
     }
-    
+
     .partner-logo:hover {
       transform: scale(1.1);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
-    
+
     /* Stats counter section */
     .counter-section {
       background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/600') center/cover no-repeat fixed;
@@ -419,870 +639,1077 @@
     }
   </style>
 </head>
+
 <body class="bg-gray-900 text-white">
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <i class="fas fa-shield-alt me-2"></i>
-        <span class="font-bold">Kerala Police</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#mission">Our Mission</a></li>
-          <li class="nav-item"><a class="nav-link" href="#horizontal-section">Impact</a></li>
-          <li class="nav-item"><a class="nav-link" href="#timeline">Timeline</a></li>
-          <li class="nav-item"><a class="nav-link" href="#drug-effects">Effects</a></li>
-          <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
-          <li class="nav-item"><a class="nav-link" href="#resources">Resources</a></li>
-          <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <!-- Scroll Navigation Dots -->
+  <div class="scroll-nav">
+    <a href="#home" class="active" data-section="home"></a>
+    <a href="#mission" data-section="mission"></a>
+    <a href="#horizontal-section" data-section="impact"></a>
+    <a href="#timeline" data-section="timeline"></a>
+    <a href="#drug-effects" data-section="effects"></a>
+    <a href="#testimonials" data-section="testimonials"></a>
+    <a href="#resources" data-section="resources"></a>
+    <a href="#faq" data-section="faq"></a>
+    <a href="#contact" data-section="contact"></a>
+  </div>
 
-  <!-- Hero Section with Parallax -->
-  <section id="home" class="hero-overlay animate-fade-in">
-    <div class="container text-center">
-      <h1 class="text-5xl font-bold mb-4 hero-title">Say No To Drugs</h1>
-      <h2 class="text-3xl font-semibold mb-4 hero-subtitle">For a Safer Kerala</h2>
-      <p class="text-xl text-gray-300 mb-6 max-w-2xl mx-auto hero-text">
-        Join the Kerala Police in our mission to create a drug-free society. Together, we can protect our communities and build a healthier future for our children.
-      </p>
-      <div class="flex flex-wrap justify-center gap-4 mt-6">
-        <button class="btn btn-effect btn-report text-white px-6 py-3 rounded-lg font-bold">
-          <i class="fas fa-exclamation-triangle me-2"></i>Report Drug Activity
-        </button>
-        <button class="btn btn-effect btn-learn text-white px-6 py-3 rounded-lg font-bold">
-          <i class="fas fa-info-circle me-2"></i>Learn More
-        </button>
-      </div>
-    </div>
-  </section>
+  <!-- Section transition effects -->
+  <div class="section-transition transition-left"></div>
+  <div class="section-transition transition-right"></div>
 
-  <!-- Mission Section with Parallax -->
-  <section id="mission" class="mission-section py-20 px-4">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6">
-          <div class="fade-up">
-            <h2 class="text-3xl font-semibold mb-4">Our Mission Against Drugs</h2>
-            <p class="text-gray-300 text-lg mb-4">
-              The Kerala Police Department is committed to combating drug abuse and trafficking throughout the state. Our comprehensive approach includes enforcement, prevention, education, and rehabilitation.
-            </p>
-            <p class="text-gray-300 text-lg mb-6">
-              We work closely with schools, communities, and healthcare providers to create awareness about the dangers of drug use and to provide support to those affected by addiction.
-            </p>
-            <button class="btn btn-effect btn-learn text-white px-5 py-2 rounded-lg font-bold">
-              Learn More About Our Initiative
-            </button>
-          </div>
-        </div>
-        <div class="col-lg-6 mt-5 mt-lg-0 text-center">
-          <div class="fade-up" data-delay="200">
-            <img src="https://source.unsplash.com/random/600x400/?police" alt="Kerala Police in Action" class="rounded-lg shadow-lg w-full max-w-md mx-auto">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Corner animations -->
+  <div class="corner-animation corner-top-left"></div>
+  <div class="corner-animation corner-top-right"></div>
+  <div class="corner-animation corner-bottom-left"></div>
+  <div class="corner-animation corner-bottom-right"></div>
 
-  <!-- Horizontal Scroll Section -->
-  <section id="horizontal-section" class="horizontal-scroll-section">
-    <div class="horizontal-scroll-container">
-      <!-- Panel 1 -->
-      <div class="horizontal-scroll-panel bg-gray-800">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-lg-6">
-              <h2 class="text-3xl font-semibold mb-6">Our Impact Across Kerala</h2>
-              <p class="text-gray-300 text-lg mb-4">
-                The Kerala Police's anti-drug campaign has made significant strides in reducing drug abuse and trafficking throughout the state. Our dedicated officers work tirelessly to protect our communities.
-              </p>
-              <p class="text-gray-300 text-lg">
-                Scroll horizontally to see our achievements in numbers →
-              </p>
-            </div>
-            <div class="col-lg-6">
-              <img src="https://source.unsplash.com/random/600x400/?kerala,map" alt="Kerala Map" class="rounded-lg shadow-lg w-full max-w-md mx-auto">
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Panel 2 -->
-      <div class="horizontal-scroll-panel">
-        <div class="container">
-          <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-              <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
-                <div class="icon mb-4 text-center">
-                  <i class="fas fa-handcuffs"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="8500">0</span>+</h3>
-                <p class="text-gray-300 text-center">Drug-Related Arrests Over the past year</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-              <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
-                <div class="icon mb-4 text-center">
-                  <i class="fas fa-chalkboard-teacher"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="200">0</span>+</h3>
-                <p class="text-gray-300 text-center">Awareness Programs Conducted statewide</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-              <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
-                <div class="icon mb-4 text-center">
-                  <i class="fas fa-hospital"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="50">0</span>+</h3>
-                <p class="text-gray-300 text-center">Rehabilitation Centers Working with us</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-              <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
-                <div class="icon mb-4 text-center">
-                  <i class="fas fa-chart-line"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="75">0</span>%</h3>
-                <p class="text-gray-300 text-center">Reduction in Drug Cases In target areas</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Panel 3 -->
-      <div class="horizontal-scroll-panel">
-        <div class="container">
-          <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-              <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
-                <div class="icon mb-4 text-center">
-                  <i class="fas fa-school"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="1200">0</span>+</h3>
-                <p class="text-gray-300 text-center">Schools Covered in Awareness Programs</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-              <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
-                <div class="icon mb-4 text-center">
-                  <i class="fas fa-users"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="1800">0</span>+</h3>
-                <p class="text-gray-300 text-center">Officers Dedicated to Anti-Drug Operations</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-              <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
-                <div class="icon mb-4 text-center">
-                  <i class="fas fa-pills"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="520">0</span>kg</h3>
-                <p class="text-gray-300 text-center">Drugs Seized in Operations</p>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-              <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
-                <div class="icon mb-4 text-center">
-                  <i class="fas fa-hands-helping"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="3500">0</span>+</h3>
-                <p class="text-gray-300 text-center">People Rehabilitated Successfully</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Timeline Section -->
-  <section id="timeline" class="py-20 px-4 bg-gray-900">
-    <div class="container">
-      <h2 class="text-3xl font-semibold mb-12 text-center fade-up">Our Journey Against Drugs</h2>
-      
-      <div class="timeline">
-        <div class="timeline-container left fade-up">
-          <div class="timeline-content">
-            <h3 class="font-semibold text-xl mb-2">2021</h3>
-            <p class="text-gray-300">Launch of "Drug-Free Kerala" initiative with dedicated task forces in all districts</p>
-          </div>
-        </div>
-        
-        <div class="timeline-container right fade-up">
-          <div class="timeline-content">
-            <h3 class="font-semibold text-xl mb-2">2022</h3>
-            <p class="text-gray-300">Established partnerships with 25+ rehabilitation centers across the state</p>
-          </div>
-        </div>
-        
-        <div class="timeline-container left fade-up">
-          <div class="timeline-content">
-            <h3 class="font-semibold text-xl mb-2">2023</h3>
-            <p class="text-gray-300">Implemented educational programs in over 1000 schools, reaching 500,000+ students</p>
-          </div>
-        </div>
-        
-        <div class="timeline-container right fade-up">
-          <div class="timeline-content">
-            <h3 class="font-semibold text-xl mb-2">2024</h3>
-            <p class="text-gray-300">Expanded community policing efforts, with 75% reduction in drug cases in target areas</p>
-          </div>
-        </div>
-        
-        <div class="timeline-container left fade-up">
-          <div class="timeline-content">
-            <h3 class="font-semibold text-xl mb-2">2025</h3>
-            <p class="text-gray-300">Launching advanced technology initiatives to track and prevent drug trafficking</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Facts Section with Interactive Chart -->
-  <section class="py-20 px-4 bg-gray-800">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6">
-          <div class="fade-up">
-            <h2 class="text-3xl font-semibold mb-6"><i class="fas fa-chart-pie me-2"></i>Why Say No?</h2>
-            <ul class="list-group list-group-flush bg-transparent">
-              <li class="list-group-item bg-transparent text-gray-300 border-bottom border-gray-700 py-3">
-                <i class="fas fa-brain me-2 text-blue-500"></i>
-                Drugs can permanently damage your brain's development
-              </li>
-              <li class="list-group-item bg-transparent text-gray-300 border-bottom border-gray-700 py-3">
-                <i class="fas fa-heart me-2 text-red-500"></i>
-                Addiction destroys families and relationships
-              </li>
-              <li class="list-group-item bg-transparent text-gray-300 border-bottom border-gray-700 py-3">
-                <i class="fas fa-graduation-cap me-2 text-yellow-500"></i>
-                Drug use significantly impacts academic performance
-              </li>
-              <li class="list-group-item bg-transparent text-gray-300 border-bottom border-gray-700 py-3">
-                <i class="fas fa-hand-holding-medical me-2 text-green-500"></i>
-                Recovery is possible with the right support
-              </li>
-              <li class="list-group-item bg-transparent text-gray-300 border-bottom border-gray-700 py-3">
-                <i class="fas fa-user-shield me-2 text-purple-500"></i>
-                Staying drug-free helps build a safer community
-              </li>
-              <li class="list-group-item bg-transparent text-gray-300 border-gray-700 py-3">
-                <i class="fas fa-dumbbell me-2 text-pink-500"></i>
-                Mental and physical health improve without substance abuse
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-6 mt-5 mt-lg-0">
-          <div class="fade-up" data-delay="200">
-            <div class="relative h-96">
-              <canvas id="factsChart"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Drug Effects Section with Parallax -->
-  <section id="drug-effects" class="drug-effects-section">
-    <div class="drug-effects-bg"></div>
-    <div class="container">
-      <h2 class="text-3xl font-semibold mb-12 text-center fade-up">Understanding Drug Effects</h2>
-      
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-4 fade-up">
-          <div class="effect-card p-5 h-full">
-            <div class="icon-container bg-red-500 mx-auto">
-              <i class="fas fa-brain text-white text-2xl"></i>
-            </div>
-            <h3 class="text-xl font-semibold mb-3 text-center">Mental Health</h3>
-            <p class="text-gray-300">
-              Drug abuse can lead to anxiety, depression, paranoia, and in severe cases, psychosis. These effects can persist long after drug use stops.
-            </p>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4 fade-up" data-delay="200">
-          <div class="effect-card p-5 h-full">
-            <div class="icon-container bg-yellow-500 mx-auto">
-              <i class="fas fa-heartbeat text-white text-2xl"></i>
-            </div>
-            <h3 class="text-xl font-semibold mb-3 text-center">Physical Health</h3>
-            <p class="text-gray-300">
-              Substance abuse damages vital organs including the heart, liver, lungs, and kidneys, increasing risk of heart attack, stroke, and organ failure.
-            </p>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4 fade-up" data-delay="400">
-          <div class="effect-card p-5 h-full">
-            <div class="icon-container bg-blue-500 mx-auto">
-              <i class="fas fa-users text-white text-2xl"></i>
-            </div>
-            <h3 class="text-xl font-semibold mb-3 text-center">Social Impact</h3>
-            <p class="text-gray-300">
-              Addiction strains relationships with family and friends, leading to isolation, broken families, and lost opportunities for education and career.
-            </p>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4 fade-up" data-delay="600">
-          <div class="effect-card p-5 h-full">
-            <div class="icon-container bg-green-500 mx-auto">
-              <i class="fas fa-money-bill-wave text-white text-2xl"></i>
-            </div>
-            <h3 class="text-xl font-semibold mb-3 text-center">Financial Impact</h3>
-            <p class="text-gray-300">
-              Drug dependency leads to financial strain through money spent on substances, reduced work productivity, job loss, and legal expenses.
-            </p>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4 fade-up" data-delay="800">
-          <div class="effect-card p-5 h-full">
-            <div class="icon-container bg-purple-500 mx-auto">
-              <i class="fas fa-balance-scale text-white text-2xl"></i>
-            </div>
-            <h3 class="text-xl font-semibold mb-3 text-center">Legal Consequences</h3>
-            <p class="text-gray-300">
-              Involvement with illegal drugs can result in arrest, criminal charges, imprisonment, and a permanent criminal record affecting future opportunities.
-            </p>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4 fade-up" data-delay="1000">
-          <div class="effect-card p-5 h-full">
-            <div class="icon-container bg-pink-500 mx-auto">
-              <i class="fas fa-child text-white text-2xl"></i>
-            </div>
-            <h3 class="text-xl font-semibold mb-3 text-center">Youth Impact</h3>
-            <p class="text-gray-300">
-              Young people are especially vulnerable to long-term developmental effects from drug use, impacting brain development and future potential.
-            </p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="text-center mt-12 fade-up">
-        <button class="btn btn-effect btn-learn text-white px-6 py-3 rounded-lg font-bold">
-          <i class="fas fa-book-medical me-2"></i>Learn More About Effects
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section id="testimonials" class="testimonial-section">
-    <div class="container">
-      <h2 class="text-3xl font-semibold mb-12 text-center fade-up">Recovery Stories</h2>
-      
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-4 fade-up">
-          <div class="testimonial-card h-full">
-            <div class="mb-4 text-center">
-              <i class="fas fa-quote-left text-3xl text-blue-500"></i>
-            </div>
-            <p class="text-gray-300 mb-4">
-              "The rehabilitation program supported by Kerala Police gave me a second chance at life. After 3 years of addiction, I'm now clean for 2 years and helping others in their journey."
-            </p>
-            <div class="flex items-center mt-4">
-              <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
-                <i class="fas fa-user text-gray-400"></i>
-              </div>
-              <div class="ml-3">
-                <h4 class="font-semibold">Rahul S.</h4>
-                <p class="text-sm text-gray-400">Trivandrum</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4 fade-up" data-delay="200">
-          <div class="testimonial-card h-full">
-            <div class="mb-4 text-center">
-              <i class="fas fa-quote-left text-3xl text-blue-500"></i>
-            </div>
-            <p class="text-gray-300 mb-4">
-              "As a teacher, I've seen the police awareness programs transform our school. Students are more informed about the dangers and peer pressure has reduced significantly."
-            </p>
-            <div class="flex items-center mt-4">
-              <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
-                <i class="fas fa-user text-gray-400"></i>
-              </div>
-              <div class="ml-3">
-                <h4 class="font-semibold">Priya N.</h4>
-                <p class="text-sm text-gray-400">Kochi</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4 fade-up" data-delay="400">
-          <div class="testimonial-card h-full">
-            <div class="mb-4 text-center">
-              <i class="fas fa-quote-left text-3xl text-blue-500"></i>
-            </div>
-            <p class="text-gray-300 mb-4">
-              "My son was headed down a dangerous path with substance abuse. The intervention program by Kerala Police connected us with resources that saved his life and our family."
-            </p>
-            <div class="flex items-center mt-4">
-              <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
-                <i class="fas fa-user text-gray-400"></i>
-              </div>
-              <div class="ml-3">
-                <h4 class="font-semibold">Joseph T.</h4>
-                <p class="text-sm text-gray-400">Kozhikode</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Resources Section -->
-  <section id="resources" class="py-20 px-4 bg-gray-900">
-    <div class="container">
-      <h2 class="text-3xl font-semibold mb-12 text-center fade-up">Resources & Help</h2>
-      
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-4 fade-up">
-          <div class="bg-gray-800 p-5 rounded-lg shadow-lg h-full">
-            <div class="text-center mb-4">
-              <i class="fas fa-phone-alt text-4xl text-blue-500"></i>
-            </div>
-            <h3 class="text-xl font-bold text-center mb-3">Helplines</h3>
-            <ul class="list-unstyled">
-              <li class="mb-2 flex">
-                <i class="fas fa-headset me-2 mt-1 text-blue-400"></i>
-                <div>
-                  <p class="font-semibold mb-0">Drug Abuse Helpline</p>
-                  <p class="text-gray-400">1800-11-0031</p>
-                </div>
-              </li>
-              <li class="mb-2 flex">
-                <i class="fas fa-headset me-2 mt-1 text-blue-400"></i>
-                <div>
-                  <p class="font-semibold mb-0">Mental Health Support</p>
-                  <p class="text-gray-400">1800-599-0019</p>
-                </div>
-              </li>
-              <li class="flex">
-                <i class="fas fa-headset me-2 mt-1 text-blue-400"></i>
-                <div>
-                  <p class="font-semibold mb-0">Kerala Police Helpline</p>
-                  <p class="text-gray-400">1090 / 112</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4 fade-up" data-delay="200">
-          <div class="bg-gray-800 p-5 rounded-lg shadow-lg h-full">
-            <div class="text-center mb-4">
-              <i class="fas fa-hospital text-4xl text-green-500"></i>
-            </div>
-            <h3 class="text-xl font-bold text-center mb-3">Rehabilitation Centers</h3>
-            <ul class="list-unstyled">
-              <li class="mb-2 flex">
-                <i class="fas fa-map-marker-alt me-2 mt-1 text-green-400"></i>
-                <div>
-                  <p class="font-semibold mb-0">State De-addiction Centers</p>
-                  <p class="text-gray-400">Available in all district hospitals</p>
-                </div>
-              </li>
-              <li class="mb-2 flex">
-                <i class="fas fa-map-marker-alt me-2 mt-1 text-green-400"></i>
-                <div>
-                  <p class="font-semibold mb-0">Integrated Rehabilitation Centers</p>
-                  <p class="text-gray-400">25+ centers across Kerala</p>
-                </div>
-              </li>
-              <li class="flex">
-                <i class="fas fa-laptop me-2 mt-1 text-green-400"></i>
-                <div>
-                  <p class="font-semibold mb-0">Find Centers Near You</p>
-                  <p class="text-gray-400">Visit our online directory</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4 fade-up" data-delay="400">
-          <div class="bg-gray-800 p-5 rounded-lg shadow-lg h-full">
-            <div class="text-center mb-4">
-              <i class="fas fa-book-open text-4xl text-yellow-500"></i>
-            </div>
-            <h3 class="text-xl font-bold text-center mb-3">Educational Resources</h3>
-            <ul class="list-unstyled">
-              <li class="mb-2 flex">
-                <i class="fas fa-file-pdf me-2 mt-1 text-yellow-400"></i>
-                <div>
-                  <p class="font-semibold mb-0">Prevention Guidelines</p>
-                  <p class="text-gray-400">Downloadable PDFs for parents & teachers</p>
-                </div>
-              </li>
-              <li class="mb-2 flex">
-                <i class="fas fa-video me-2 mt-1 text-yellow-400"></i>
-                <div>
-                  <p class="font-semibold mb-0">Awareness Videos</p>
-                  <p class="text-gray-400">Educational content for all age groups</p>
-                </div>
-              </li>
-              <li class="flex">
-                <i class="fas fa-chalkboard-teacher me-2 mt-1 text-yellow-400"></i>
-                <div>
-                  <p class="font-semibold mb-0">School Program Resources</p>
-                  <p class="text-gray-400">Materials for classroom discussions</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ Section -->
-  <section id="faq" class="py-20 px-4 bg-gray-800">
-    <div class="container">
-      <h2 class="text-3xl font-semibold mb-12 text-center fade-up">Frequently Asked Questions</h2>
-      
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <div class="faq-card fade-up">
-            <div class="faq-header" onclick="toggleFAQ(this)">
-              <h3 class="font-semibold text-lg">How can I report drug-related activities in my area?</h3>
-              <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="faq-body">
-              <p class="text-gray-300">
-                You can report anonymously through our confidential helpline at 1090 or via our online reporting portal. All information provided is kept strictly confidential, and your identity will be protected.
-              </p>
-            </div>
-          </div>
-          
-          <div class="faq-card fade-up" data-delay="100">
-            <div class="faq-header" onclick="toggleFAQ(this)">
-              <h3 class="font-semibold text-lg">What are the signs that someone might be using drugs?</h3>
-              <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="faq-body">
-              <p class="text-gray-300">
-                Common signs include sudden behavioral changes, mood swings, secretive behavior, changes in appearance, declining academic or work performance, financial problems, and new friend groups. However, these can also be signs of other issues, so approach the situation with care and concern.
-              </p>
-            </div>
-          </div>
-          
-          <div class="faq-card fade-up" data-delay="200">
-            <div class="faq-header" onclick="toggleFAQ(this)">
-              <h3 class="font-semibold text-lg">How can schools partner with Kerala Police for awareness programs?</h3>
-              <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="faq-body">
-              <p class="text-gray-300">
-                Schools can contact their local police station or our dedicated school outreach division at schooloutreach@keralapolice.gov.in. We offer tailored programs for different age groups and can provide trained officers to conduct sessions at your institution.
-              </p>
-            </div>
-          </div>
-          
-          <div class="faq-card fade-up" data-delay="300">
-            <div class="faq-header" onclick="toggleFAQ(this)">
-              <h3 class="font-semibold text-lg">What happens during rehabilitation for drug addiction?</h3>
-              <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="faq-body">
-              <p class="text-gray-300">
-                Rehabilitation typically involves detoxification under medical supervision, followed by counseling, therapy, and support group participation. Our partner centers offer comprehensive programs that include family counseling, life skills training, and aftercare support to prevent relapse.
-              </p>
-            </div>
-          </div>
-          
-          <div class="faq-card fade-up" data-delay="400">
-            <div class="faq-header" onclick="toggleFAQ(this)">
-              <h3 class="font-semibold text-lg">Is addiction treatment confidential?</h3>
-              <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="faq-body">
-              <p class="text-gray-300">
-                Yes, all treatment services are confidential. Medical and counseling records are protected by privacy laws. Our rehabilitation partners prioritize confidentiality to encourage people to seek help without fear of social stigma or legal consequences.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Community Involvement Section -->
-  <section class="involvement-section fade-up">
-    <div class="container">
-      <h2 class="text-3xl font-semibold mb-12 text-center">Get Involved</h2>
-      
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-4">
-          <div class="involvement-card">
-            <img src="https://source.unsplash.com/random/600x400/?community,workshop" alt="Community Workshop" class="w-full h-48 object-cover">
-            <div class="involvement-content">
-              <h3 class="text-xl font-semibold mb-2">Volunteer Programs</h3>
-              <p class="text-gray-300 mb-3">Join our network of volunteers supporting drug prevention initiatives</p>
-              <button class="btn btn-sm btn-effect btn-learn text-white px-4 py-2 rounded-lg">Learn More</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4">
-          <div class="involvement-card">
-            <img src="https://source.unsplash.com/random/600x400/?school,awareness" alt="School Awareness" class="w-full h-48 object-cover">
-            <div class="involvement-content">
-              <h3 class="text-xl font-semibold mb-2">School Programs</h3>
-              <p class="text-gray-300 mb-3">Request awareness sessions for your educational institution</p>
-              <button class="btn btn-sm btn-effect btn-learn text-white px-4 py-2 rounded-lg">Request Program</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-4">
-          <div class="involvement-card">
-            <img src="https://source.unsplash.com/random/600x400/?community,event" alt="Community Event" class="w-full h-48 object-cover">
-            <div class="involvement-content">
-              <h3 class="text-xl font-semibold mb-2">Community Events</h3>
-              <p class="text-gray-300 mb-3">Find upcoming anti-drug events and campaigns in your area</p>
-              <button class="btn btn-sm btn-effect btn-learn text-white px-4 py-2 rounded-lg">View Calendar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Partners Section -->
-  <section class="partners-section fade-up">
-    <div class="container">
-      <h2 class="text-2xl font-semibold mb-10 text-center">Our Partners</h2>
-      
-      <div class="row g-4 justify-content-center">
-        <div class="col-4 col-md-2 text-center">
-          <div class="partner-logo mx-auto">
-            <i class="fas fa-hospital-alt text-blue-500 text-3xl"></i>
-          </div>
-          <p class="mt-3 text-sm">Health Department</p>
-        </div>
-        
-        <div class="col-4 col-md-2 text-center">
-          <div class="partner-logo mx-auto">
-            <i class="fas fa-graduation-cap text-yellow-500 text-3xl"></i>
-          </div>
-          <p class="mt-3 text-sm">Education Dept</p>
-        </div>
-        
-        <div class="col-4 col-md-2 text-center">
-          <div class="partner-logo mx-auto">
-            <i class="fas fa-users text-green-500 text-3xl"></i>
-          </div>
-          <p class="mt-3 text-sm">Social Welfare</p>
-        </div>
-        
-        <div class="col-4 col-md-2 text-center">
-          <div class="partner-logo mx-auto">
-            <i class="fas fa-hand-holding-heart text-red-500 text-3xl"></i>
-          </div>
-          <p class="mt-3 text-sm">NGO Alliance</p>
-        </div>
-        
-        <div class="col-4 col-md-2 text-center">
-          <div class="partner-logo mx-auto">
-            <i class="fas fa-building text-purple-500 text-3xl"></i>
-          </div>
-          <p class="mt-3 text-sm">Local Govt</p>
-        </div>
-        
-        <div class="col-4 col-md-2 text-center">
-          <div class="partner-logo mx-auto">
-            <i class="fas fa-comments text-teal-500 text-3xl"></i>
-          </div>
-          <p class="mt-3 text-sm">Youth Forum</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="py-20 px-4 bg-gray-900">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 fade-up">
-          <h2 class="text-3xl font-semibold mb-6">Contact Us</h2>
-          <p class="text-gray-300 mb-8">
-            Have questions or need assistance? Reach out to us through any of the channels below.
-          </p>
-          
-          <div class="mb-6 flex items-start">
-            <div class="text-blue-500 mr-3">
-              <i class="fas fa-map-marker-alt text-2xl"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold mb-1">Headquarters</h3>
-              <p class="text-gray-400">Kerala Police Headquarters, Thiruvananthapuram, Kerala 695010</p>
-            </div>
-          </div>
-          
-          <div class="mb-6 flex items-start">
-            <div class="text-blue-500 mr-3">
-              <i class="fas fa-phone-alt text-2xl"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold mb-1">Phone</h3>
-              <p class="text-gray-400">General: 0471-2721547</p>
-              <p class="text-gray-400">Helpline: 1090 (Toll Free)</p>
-            </div>
-          </div>
-          
-          <div class="mb-6 flex items-start">
-            <div class="text-blue-500 mr-3">
-              <i class="fas fa-envelope text-2xl"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold mb-1">Email</h3>
-              <p class="text-gray-400">info@keralapolice.gov.in</p>
-              <p class="text-gray-400">nodrugscampaign@keralapolice.gov.in</p>
-            </div>
-          </div>
-          
-          <div class="mt-8">
-            <h3 class="font-semibold mb-3">Follow Us</h3>
-            <div class="flex gap-4">
-              <a href="#" class="bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-blue-700">
-                <i class="fab fa-facebook-f text-white"></i>
+  <!-- Main Container for Horizontal Movement -->
+  <div class="main-container">
+    <div class="horizontal-wrapper">
+      <div class="horizontal-content">
+        <!-- Navigation (Fixed) -->
+        <div class="fixed-elements" style="position: fixed; width: 100%; z-index: 1000;">
+          <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container">
+              <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="fas fa-fist-raised me-2"></i>
+                <span class="font-bold">Youth Against Addiction</span>
               </a>
-              <a href="#" class="bg-sky-500 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-sky-600">
-                <i class="fab fa-twitter text-white"></i>
-              </a>
-              <a href="#" class="bg-red-600 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-red-700">
-                <i class="fab fa-youtube text-white"></i>
-              </a>
-              <a href="#" class="bg-pink-600 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-pink-700">
-                <i class="fab fa-instagram text-white"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-lg-6 mt-8 mt-lg-0 fade-up" data-delay="200">
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h3 class="text-2xl font-semibold mb-4">Send Us a Message</h3>
-            <form>
-              <div class="mb-4">
-                <label for="name" class="block text-gray-400 mb-2">Name</label>
-                <input type="text" id="name" class="form-control bg-gray-700 border-0 text-white" placeholder="Your name">
-              </div>
-              
-              <div class="mb-4">
-                <label for="email" class="block text-gray-400 mb-2">Email</label>
-                <input type="email" id="email" class="form-control bg-gray-700 border-0 text-white" placeholder="Your email">
-              </div>
-              
-              <div class="mb-4">
-                <label for="subject" class="block text-gray-400 mb-2">Subject</label>
-                <select id="subject" class="form-select bg-gray-700 border-0 text-white">
-                  <option selected>Choose a subject</option>
-                  <option>Report Drug Activity</option>
-                  <option>Request for Information</option>
-                  <option>School Program Request</option>
-                  <option>Volunteer Inquiries</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              
-              <div class="mb-4">
-                <label for="message" class="block text-gray-400 mb-2">Message</label>
-                <textarea id="message" rows="5" class="form-control bg-gray-700 border-0 text-white" placeholder="Your message"></textarea>
-              </div>
-              
-              <button type="submit" class="btn btn-effect btn-learn text-white w-full py-3 rounded-lg font-bold">
-                <i class="fas fa-paper-plane me-2"></i>Send Message
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
               </button>
-            </form>
-          </div>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                  <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#mission">Our Mission</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#horizontal-section">Impact</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#timeline">Timeline</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#drug-effects">Effects</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#resources">Resources</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 py-12 border-t border-gray-800">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 mb-6 mb-md-0">
-          <div class="flex items-center mb-4">
-            <i class="fas fa-shield-alt text-3xl text-blue-500 me-2"></i>
-            <h3 class="text-xl font-bold">Kerala Police</h3>
+        <!-- Main Content Sections -->
+        <!-- Hero Section with Parallax -->
+        <section id="home" class="scroll-section hero-overlay animate-fade-in">
+          <div class="container text-center">
+            <h1 class="text-5xl font-bold mb-4 hero-title">Join the Movement Against Addiction</h1>
+            <h2 class="text-3xl font-semibold mb-4 hero-subtitle">Empowering Youth, Transforming Lives</h2>
+            <p class="text-xl text-gray-300 mb-6 max-w-2xl mx-auto hero-text">
+              Together, we can create a drug-free society. Join our youth-led movement to educate, support, and empower
+              your peers.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 mt-6">
+              <button class="btn btn-effect btn-report text-white px-6 py-3 rounded-lg font-bold">
+                <i class="fas fa-exclamation-triangle me-2"></i>Report Drug Activity
+              </button>
+              <button class="btn btn-effect btn-learn text-white px-6 py-3 rounded-lg font-bold">
+                <i class="fas fa-info-circle me-2"></i>Learn More
+              </button>
+            </div>
           </div>
-          <p class="text-gray-400 mb-4">
-            Committed to creating a drug-free Kerala through enforcement, education, and community partnerships.
-          </p>
-          <p class="text-gray-500 text-sm">
-            © 2025 Kerala Police Department. All rights reserved.
-          </p>
-        </div>
-        
-        <div class="col-md-2 col-6 mb-6 mb-md-0">
-          <h4 class="font-semibold mb-4">Quick Links</h4>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a href="#home" class="text-gray-400 hover:text-blue-500 transition-colors">Home</a></li>
-            <li class="mb-2"><a href="#mission" class="text-gray-400 hover:text-blue-500 transition-colors">Our Mission</a></li>
-            <li class="mb-2"><a href="#drug-effects" class="text-gray-400 hover:text-blue-500 transition-colors">Drug Effects</a></li>
-            <li class="mb-2"><a href="#resources" class="text-gray-400 hover:text-blue-500 transition-colors">Resources</a></li>
-            <li><a href="#contact" class="text-gray-400 hover:text-blue-500 transition-colors">Contact</a></li>
-          </ul>
-        </div>
-        
-        <div class="col-md-2 col-6 mb-6 mb-md-0">
-          <h4 class="font-semibold mb-4">Resources</h4>
-          <ul class="list-unstyled">
-            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">Helplines</a></li>
-            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">Support Centers</a></li>
-            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">Educational Materials</a></li>
-            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">Recovery Programs</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">Legal Information</a></li>
-          </ul>
-        </div>
-        
-        <div class="col-md-4">
-          <h4 class="font-semibold mb-4">Subscribe to Updates</h4>
-          <p class="text-gray-400 mb-4">
-            Stay informed about our campaigns and initiatives.
-          </p>
-          <form class="flex">
-            <input type="email" placeholder="Your email" class="form-control bg-gray-800 border-0 text-white">
-            <button type="submit" class="btn btn-blue text-white px-4 ms-2">
-              <i class="fas fa-arrow-right"></i>
-            </button>
-          </form>
-          <p class="text-gray-500 text-sm mt-4">
-            We respect your privacy. Unsubscribe at any time.
-          </p>
-        </div>
-      </div>
-    </div>
-  </footer>
+        </section>
+
+        <!-- Mission Section with Parallax -->
+        <section id="mission" class="scroll-section mission-section py-20 px-4">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg-6">
+                <div class="fade-up">
+                  <h2 class="text-3xl font-semibold mb-4">Our Mission Against Addiction</h2>
+                  <p class="text-gray-300 text-lg mb-4">
+                    Youth Against Addiction is a grassroots organization founded and led by young people committed to
+                    combating drug abuse through peer education, community action, and support networks.
+                  </p>
+                  <p class="text-gray-300 text-lg mb-6">
+                    We work directly with schools, colleges, community centers, and social media platforms to create
+                    awareness about the dangers of drug use and provide peer-to-peer support for those affected by
+                    addiction.
+                  </p>
+                  <button class="btn btn-effect btn-learn text-white px-5 py-2 rounded-lg font-bold">
+                    Learn More About Our Initiative
+                  </button>
+                </div>
+              </div>
+              <div class="col-lg-6 mt-5 mt-lg-0 text-center">
+                <div class="fade-up" data-delay="200">
+                  <img src="https://source.unsplash.com/random/600x400/?youth,addiction" alt="Youth Against Addiction"
+                    class="rounded-lg shadow-lg w-full max-w-md mx-auto">
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Horizontal Scroll Section -->
+        <section id="horizontal-section" class="scroll-section horizontal-scroll-section">
+          <div class="horizontal-scroll-container">
+            <!-- Panel 1 -->
+            <div class="horizontal-scroll-panel bg-gray-800">
+              <div class="container">
+                <div class="row align-items-center">
+                  <div class="col-lg-6">
+                    <h2 class="text-3xl font-semibold mb-6">Our Impact Across the Country</h2>
+                    <p class="text-gray-300 text-lg mb-4">
+                      Our youth-led anti-drug campaign has made significant strides in reducing drug abuse through peer
+                      influence and community engagement. Our dedicated volunteers work tirelessly to protect their
+                      friends and communities.
+                    </p>
+                    <p class="text-gray-300 text-lg">
+                      Scroll horizontally to see our achievements in numbers →
+                    </p>
+                  </div>
+                  <div class="col-lg-6">
+                    <img src="https://source.unsplash.com/random/600x400/?youth,addiction" alt="Youth Against Addiction"
+                      class="rounded-lg shadow-lg w-full max-w-md mx-auto">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 2 -->
+            <div class="horizontal-scroll-panel">
+              <div class="container">
+                <div class="row g-4">
+                  <div class="col-md-6 col-lg-3">
+                    <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
+                      <div class="icon mb-4 text-center">
+                        <i class="fas fa-users"></i>
+                      </div>
+                      <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="1800">0</span>+
+                      </h3>
+                      <p class="text-gray-300 text-center">Youth Volunteers Across the Country</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                    <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
+                      <div class="icon mb-4 text-center">
+                        <i class="fas fa-school"></i>
+                      </div>
+                      <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="1200">0</span>+
+                      </h3>
+                      <p class="text-gray-300 text-center">Schools Covered in Awareness Programs</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                    <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
+                      <div class="icon mb-4 text-center">
+                        <i class="fas fa-hospital"></i>
+                      </div>
+                      <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="50">0</span>+
+                      </h3>
+                      <p class="text-gray-300 text-center">Rehabilitation Centers Working with us</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                    <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
+                      <div class="icon mb-4 text-center">
+                        <i class="fas fa-chart-line"></i>
+                      </div>
+                      <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="75">0</span>%
+                      </h3>
+                      <p class="text-gray-300 text-center">Reduction in Drug Cases In target areas</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 3 -->
+            <div class="horizontal-scroll-panel">
+              <div class="container">
+                <div class="row g-4">
+                  <div class="col-md-6 col-lg-3">
+                    <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
+                      <div class="icon mb-4 text-center">
+                        <i class="fas fa-hand-holding-medical"></i>
+                      </div>
+                      <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="3500">0</span>+
+                      </h3>
+                      <p class="text-gray-300 text-center">People Rehabilitated Successfully</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                    <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
+                      <div class="icon mb-4 text-center">
+                        <i class="fas fa-users"></i>
+                      </div>
+                      <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="1800">0</span>+
+                      </h3>
+                      <p class="text-gray-300 text-center">Officers Dedicated to Anti-Drug Operations</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                    <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
+                      <div class="icon mb-4 text-center">
+                        <i class="fas fa-pills"></i>
+                      </div>
+                      <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="520">0</span>kg
+                      </h3>
+                      <p class="text-gray-300 text-center">Drugs Seized in Operations</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3">
+                    <div class="bg-gray-700 p-5 rounded-lg shadow-lg h-full stat-card">
+                      <div class="icon mb-4 text-center">
+                        <i class="fas fa-hands-helping"></i>
+                      </div>
+                      <h3 class="text-2xl font-bold text-center mb-2"><span class="count-up" data-count="3500">0</span>+
+                      </h3>
+                      <p class="text-gray-300 text-center">People Rehabilitated Successfully</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section id="timeline" class="scroll-section py-20 px-4 bg-gray-900">
+          <div class="container">
+            <h2 class="text-3xl font-semibold mb-12 text-center fade-up">Our Journey Against Addiction</h2>
+
+            <div class="timeline">
+              <div class="timeline-container left fade-up">
+                <div class="timeline-content">
+                  <h3 class="font-semibold text-xl mb-2">2021</h3>
+                  <p class="text-gray-300">
+                    Launch of "Youth Against Addiction" movement with student chapters in colleges and schools
+                  </p>
+                </div>
+              </div>
+
+              <div class="timeline-container right fade-up">
+                <div class="timeline-content">
+                  <h3 class="font-semibold text-xl mb-2">2022</h3>
+                  <p class="text-gray-300">
+                    Established peer support networks in 25+ educational institutions nationwide
+                  </p>
+                </div>
+              </div>
+
+              <div class="timeline-container left fade-up">
+                <div class="timeline-content">
+                  <h3 class="font-semibold text-xl mb-2">2023</h3>
+                  <p class="text-gray-300">
+                    Launched youth-led educational programs in over 1000 schools, reaching 500,000+ students
+                  </p>
+                </div>
+              </div>
+
+              <div class="timeline-container right fade-up">
+                <div class="timeline-content">
+                  <h3 class="font-semibold text-xl mb-2">2024</h3>
+                  <p class="text-gray-300">
+                    Expanded peer mentorship programs, with 75% reduction in drug use in participating schools
+                  </p>
+                </div>
+              </div>
+
+              <div class="timeline-container left fade-up">
+                <div class="timeline-content">
+                  <h3 class="font-semibold text-xl mb-2">2025</h3>
+                  <p class="text-gray-300">
+                    Launching digital outreach campaigns and mobile apps to connect with youth at risk
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Facts Section with Interactive Chart -->
+        <section class="scroll-section py-20 px-4 bg-gray-800">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg-6">
+                <div class="fade-up">
+                  <h2 class="text-3xl font-semibold mb-6"><i class="fas fa-chart-pie me-2"></i>Why Say No?</h2>
+                  <ul class="list-group list-group-flush bg-transparent">
+                    <li class="list-group-item bg-transparent text-gray-300 border-bottom border-gray-700 py-3">
+                      <i class="fas fa-brain me-2 text-blue-500"></i>
+                      Drugs can permanently damage your brain's development
+                    </li>
+                    <li class="list-group-item bg-transparent text-gray-300 border-bottom border-gray-700 py-3">
+                      <i class="fas fa-heart me-2 text-red-500"></i>
+                      Addiction destroys families and relationships
+                    </li>
+                    <li class="list-group-item bg-transparent text-gray-300 border-bottom border-gray-700 py-3">
+                      <i class="fas fa-graduation-cap me-2 text-yellow-500"></i>
+                      Drug use significantly impacts academic performance
+                    </li>
+                    <li class="list-group-item bg-transparent text-gray-300 border-bottom border-gray-700 py-3">
+                      <i class="fas fa-hand-holding-medical me-2 text-green-500"></i>
+                      Recovery is possible with the right support
+                    </li>
+                    <li class="list-group-item bg-transparent text-gray-300 border-bottom border-gray-700 py-3">
+                      <i class="fas fa-user-shield me-2 text-purple-500"></i>
+                      Staying drug-free helps build a safer community
+                    </li>
+                    <li class="list-group-item bg-transparent text-gray-300 border-gray-700 py-3">
+                      <i class="fas fa-dumbbell me-2 text-pink-500"></i>
+                      Mental and physical health improve without substance abuse
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-6 mt-5 mt-lg-0">
+                <div class="fade-up" data-delay="200">
+                  <div class="relative h-96">
+                    <canvas id="factsChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Drug Effects Section with Parallax -->
+        <section id="drug-effects" class="scroll-section drug-effects-section">
+          <div class="drug-effects-bg"></div>
+          <div class="container">
+            <h2 class="text-3xl font-semibold mb-12 text-center fade-up">Understanding Drug Effects</h2>
+
+            <div class="row g-4">
+              <div class="col-md-6 col-lg-4 fade-up">
+                <div class="effect-card p-5 h-full">
+                  <div class="icon-container bg-red-500 mx-auto">
+                    <i class="fas fa-brain text-white text-2xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-3 text-center">Mental Health</h3>
+                  <p class="text-gray-300">
+                    Drug abuse can lead to anxiety, depression, paranoia, and in severe cases, psychosis. These effects
+                    can persist long after drug use stops.
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="200">
+                <div class="effect-card p-5 h-full">
+                  <div class="icon-container bg-yellow-500 mx-auto">
+                    <i class="fas fa-heartbeat text-white text-2xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-3 text-center">Physical Health</h3>
+                  <p class="text-gray-300">
+                    Substance abuse damages vital organs including the heart, liver, lungs, and kidneys, increasing risk
+                    of heart attack, stroke, and organ failure.
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="400">
+                <div class="effect-card p-5 h-full">
+                  <div class="icon-container bg-blue-500 mx-auto">
+                    <i class="fas fa-users text-white text-2xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-3 text-center">Social Impact</h3>
+                  <p class="text-gray-300">
+                    Addiction strains relationships with family and friends, leading to isolation, broken families, and
+                    lost opportunities for education and career.
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="600">
+                <div class="effect-card p-5 h-full">
+                  <div class="icon-container bg-green-500 mx-auto">
+                    <i class="fas fa-money-bill-wave text-white text-2xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-3 text-center">Financial Impact</h3>
+                  <p class="text-gray-300">
+                    Drug dependency leads to financial strain through money spent on substances, reduced work
+                    productivity, job loss, and legal expenses.
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="800">
+                <div class="effect-card p-5 h-full">
+                  <div class="icon-container bg-purple-500 mx-auto">
+                    <i class="fas fa-balance-scale text-white text-2xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-3 text-center">Legal Consequences</h3>
+                  <p class="text-gray-300">
+                    Involvement with illegal drugs can result in arrest, criminal charges, imprisonment, and a permanent
+                    criminal record affecting future opportunities.
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="1000">
+                <div class="effect-card p-5 h-full">
+                  <div class="icon-container bg-pink-500 mx-auto">
+                    <i class="fas fa-child text-white text-2xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-3 text-center">Youth Impact</h3>
+                  <p class="text-gray-300">
+                    Young people are especially vulnerable to long-term developmental effects from drug use, impacting
+                    brain development and future potential.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center mt-12 fade-up">
+              <button class="btn btn-effect btn-learn text-white px-6 py-3 rounded-lg font-bold">
+                <i class="fas fa-book-medical me-2"></i>Learn More About Effects
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="scroll-section testimonial-section">
+          <div class="container">
+            <h2 class="text-3xl font-semibold mb-12 text-center fade-up">Recovery Stories</h2>
+
+            <div class="row g-4">
+              <div class="col-md-6 col-lg-4 fade-up">
+                <div class="testimonial-card h-full">
+                  <div class="mb-4 text-center">
+                    <i class="fas fa-quote-left text-3xl text-blue-500"></i>
+                  </div>
+                  <p class="text-gray-300 mb-4">
+                    "The rehabilitation program supported by Youth Against Addiction gave me a second chance at life.
+                    After 3 years of addiction, I'm now clean for 2 years and helping others in their journey."
+                  </p>
+                  <div class="flex items-center mt-4">
+                    <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
+                      <i class="fas fa-user text-gray-400"></i>
+                    </div>
+                    <div class="ml-3">
+                      <h4 class="font-semibold">Rahul S.</h4>
+                      <p class="text-sm text-gray-400">Trivandrum</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="200">
+                <div class="testimonial-card h-full">
+                  <div class="mb-4 text-center">
+                    <i class="fas fa-quote-left text-3xl text-blue-500"></i>
+                  </div>
+                  <p class="text-gray-300 mb-4">
+                    "As a teacher, I've seen the awareness programs transform our school. Students are more informed
+                    about the dangers and peer pressure has reduced significantly."
+                  </p>
+                  <div class="flex items-center mt-4">
+                    <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
+                      <i class="fas fa-user text-gray-400"></i>
+                    </div>
+                    <div class="ml-3">
+                      <h4 class="font-semibold">Priya N.</h4>
+                      <p class="text-sm text-gray-400">Kochi</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="400">
+                <div class="testimonial-card h-full">
+                  <div class="mb-4 text-center">
+                    <i class="fas fa-quote-left text-3xl text-blue-500"></i>
+                  </div>
+                  <p class="text-gray-300 mb-4">
+                    "My son was headed down a dangerous path with substance abuse. The intervention program by Youth
+                    Against Addiction connected us with resources that saved his life and our family."
+                  </p>
+                  <div class="flex items-center mt-4">
+                    <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
+                      <i class="fas fa-user text-gray-400"></i>
+                    </div>
+                    <div class="ml-3">
+                      <h4 class="font-semibold">Joseph T.</h4>
+                      <p class="text-sm text-gray-400">Kozhikode</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="600">
+                <div class="testimonial-card h-full">
+                  <div class="mb-4 text-center">
+                    <i class="fas fa-quote-left text-3xl text-blue-500"></i>
+                  </div>
+                  <p class="text-gray-300 mb-4">
+                    "The peer support network was crucial in my recovery. Having someone who understood exactly what I
+                    was going through made all the difference. Now I'm 18 months sober."
+                  </p>
+                  <div class="flex items-center mt-4">
+                    <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
+                      <i class="fas fa-user text-gray-400"></i>
+                    </div>
+                    <div class="ml-3">
+                      <h4 class="font-semibold">Ananya P.</h4>
+                      <p class="text-sm text-gray-400">Bangalore</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="800">
+                <div class="testimonial-card h-full">
+                  <div class="mb-4 text-center">
+                    <i class="fas fa-quote-left text-3xl text-blue-500"></i>
+                  </div>
+                  <p class="text-gray-300 mb-4">
+                    "As a college student, I saw many friends fall into addiction. The campus awareness program by Youth
+                    Against Addiction gave us tools to help each other and create a supportive environment."
+                  </p>
+                  <div class="flex items-center mt-4">
+                    <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
+                      <i class="fas fa-user text-gray-400"></i>
+                    </div>
+                    <div class="ml-3">
+                      <h4 class="font-semibold">Vikram M.</h4>
+                      <p class="text-sm text-gray-400">Chennai</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="1000">
+                <div class="testimonial-card h-full">
+                  <div class="mb-4 text-center">
+                    <i class="fas fa-quote-left text-3xl text-blue-500"></i>
+                  </div>
+                  <p class="text-gray-300 mb-4">
+                    "The digital outreach program reached me when I was at my lowest. The anonymous chat support
+                    connected me with resources I didn't know existed, and started my journey to recovery."
+                  </p>
+                  <div class="flex items-center mt-4">
+                    <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
+                      <i class="fas fa-user text-gray-400"></i>
+                    </div>
+                    <div class="ml-3">
+                      <h4 class="font-semibold">Sanjay K.</h4>
+                      <p class="text-sm text-gray-400">Hyderabad</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="scroll-section py-20 px-4 bg-gray-900">
+          <div class="container">
+            <h2 class="text-3xl font-semibold mb-12 text-center fade-up">Resources & Help</h2>
+
+            <div class="row g-4">
+              <div class="col-md-6 col-lg-4 fade-up">
+                <div class="bg-gray-800 p-5 rounded-lg shadow-lg h-full">
+                  <div class="text-center mb-4">
+                    <i class="fas fa-phone-alt text-4xl text-blue-500"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-center mb-3">Helplines</h3>
+                  <ul class="list-unstyled">
+                    <li class="mb-2 flex">
+                      <i class="fas fa-headset me-2 mt-1 text-blue-400"></i>
+                      <div>
+                        <p class="font-semibold mb-0">Drug Abuse Helpline</p>
+                        <p class="text-gray-400">1800-11-0031</p>
+                      </div>
+                    </li>
+                    <li class="mb-2 flex">
+                      <i class="fas fa-headset me-2 mt-1 text-blue-400"></i>
+                      <div>
+                        <p class="font-semibold mb-0">Mental Health Support</p>
+                        <p class="text-gray-400">1800-599-0019</p>
+                      </div>
+                    </li>
+                    <li class="flex">
+                      <i class="fas fa-headset me-2 mt-1 text-blue-400"></i>
+                      <div>
+                        <p class="font-semibold mb-0">Youth Against Addiction Helpline</p>
+                        <p class="text-gray-400">1800-YOUTH-HELP (Toll Free)</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="200">
+                <div class="bg-gray-800 p-5 rounded-lg shadow-lg h-full">
+                  <div class="text-center mb-4">
+                    <i class="fas fa-hospital text-4xl text-green-500"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-center mb-3">Rehabilitation Centers</h3>
+                  <ul class="list-unstyled">
+                    <li class="mb-2 flex">
+                      <i class="fas fa-map-marker-alt me-2 mt-1 text-green-400"></i>
+                      <div>
+                        <p class="font-semibold mb-0">State De-addiction Centers</p>
+                        <p class="text-gray-400">Available in all district hospitals</p>
+                      </div>
+                    </li>
+                    <li class="mb-2 flex">
+                      <i class="fas fa-map-marker-alt me-2 mt-1 text-green-400"></i>
+                      <div>
+                        <p class="font-semibold mb-0">Integrated Rehabilitation Centers</p>
+                        <p class="text-gray-400">25+ centers across the country</p>
+                      </div>
+                    </li>
+                    <li class="flex">
+                      <i class="fas fa-laptop me-2 mt-1 text-green-400"></i>
+                      <div>
+                        <p class="font-semibold mb-0">Find Centers Near You</p>
+                        <p class="text-gray-400">Visit our online directory</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 fade-up" data-delay="400">
+                <div class="bg-gray-800 p-5 rounded-lg shadow-lg h-full">
+                  <div class="text-center mb-4">
+                    <i class="fas fa-book-open text-4xl text-yellow-500"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-center mb-3">Educational Resources</h3>
+                  <ul class="list-unstyled">
+                    <li class="mb-2 flex">
+                      <i class="fas fa-file-pdf me-2 mt-1 text-yellow-400"></i>
+                      <div>
+                        <p class="font-semibold mb-0">Prevention Guidelines</p>
+                        <p class="text-gray-400">Downloadable PDFs for parents & teachers</p>
+                      </div>
+                    </li>
+                    <li class="mb-2 flex">
+                      <i class="fas fa-video me-2 mt-1 text-yellow-400"></i>
+                      <div>
+                        <p class="font-semibold mb-0">Awareness Videos</p>
+                        <p class="text-gray-400">Educational content for all age groups</p>
+                      </div>
+                    </li>
+                    <li class="flex">
+                      <i class="fas fa-chalkboard-teacher me-2 mt-1 text-yellow-400"></i>
+                      <div>
+                        <p class="font-semibold mb-0">School Program Resources</p>
+                        <p class="text-gray-400">Materials for classroom discussions</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="scroll-section py-20 px-4 bg-gray-800">
+          <div class="container">
+            <h2 class="text-3xl font-semibold mb-12 text-center fade-up">Frequently Asked Questions</h2>
+
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="faq-card fade-up">
+                  <div class="faq-header" onclick="toggleFAQ(this)">
+                    <h3 class="font-semibold text-lg">How can I report drug-related activities in my area?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                  </div>
+                  <div class="faq-body">
+                    <p class="text-gray-300">
+                      You can reach out anonymously through our confidential peer helpline at 1800-YOUTH-HELP or via our
+                      online support portal. All information provided is kept strictly confidential, and your identity
+                      will be protected.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="faq-card fade-up" data-delay="100">
+                  <div class="faq-header" onclick="toggleFAQ(this)">
+                    <h3 class="font-semibold text-lg">What are the signs that someone might be using drugs?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                  </div>
+                  <div class="faq-body">
+                    <p class="text-gray-300">
+                      Common signs include sudden behavioral changes, mood swings, secretive behavior, changes in
+                      appearance, declining academic or work performance, financial problems, and new friend groups.
+                      However, these can also be signs of other issues, so approach the situation with care and concern.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="faq-card fade-up" data-delay="200">
+                  <div class="faq-header" onclick="toggleFAQ(this)">
+                    <h3 class="font-semibold text-lg">How can schools partner with Youth Against Addiction for awareness
+                      programs?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                  </div>
+                  <div class="faq-body">
+                    <p class="text-gray-300">
+                      Schools can contact our dedicated outreach team at schools@youthagainstaddiction.org. We offer
+                      peer-led programs for different age groups and can provide trained youth volunteers to conduct
+                      interactive sessions at your institution.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="faq-card fade-up" data-delay="300">
+                  <div class="faq-header" onclick="toggleFAQ(this)">
+                    <h3 class="font-semibold text-lg">What happens during rehabilitation for drug addiction?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                  </div>
+                  <div class="faq-body">
+                    <p class="text-gray-300">
+                      Rehabilitation typically involves detoxification under medical supervision, followed by
+                      counseling, therapy, and support group participation. Our partner centers offer comprehensive
+                      programs that include family counseling, life skills training, and aftercare support to prevent
+                      relapse.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="faq-card fade-up" data-delay="400">
+                  <div class="faq-header" onclick="toggleFAQ(this)">
+                    <h3 class="font-semibold text-lg">Is addiction treatment confidential?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                  </div>
+                  <div class="faq-body">
+                    <p class="text-gray-300">
+                      Yes, all treatment services are confidential. Medical and counseling records are protected by
+                      privacy laws. Our rehabilitation partners prioritize confidentiality to encourage people to seek
+                      help without fear of social stigma or legal consequences.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Community Involvement Section -->
+        <section class="scroll-section involvement-section fade-up">
+          <div class="container">
+            <h2 class="text-3xl font-semibold mb-12 text-center">Get Involved</h2>
+
+            <div class="row g-4">
+              <div class="col-md-6 col-lg-4">
+                <div class="involvement-card">
+                  <img src="https://source.unsplash.com/random/600x400/?community,workshop" alt="Community Workshop"
+                    class="w-full h-48 object-cover">
+                  <div class="involvement-content">
+                    <h3 class="text-xl font-semibold mb-2">Volunteer Programs</h3>
+                    <p class="text-gray-300 mb-3">Join our network of volunteers supporting drug prevention initiatives
+                    </p>
+                    <button class="btn btn-sm btn-effect btn-learn text-white px-4 py-2 rounded-lg">Learn More</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4">
+                <div class="involvement-card">
+                  <img src="https://source.unsplash.com/random/600x400/?school,awareness" alt="School Awareness"
+                    class="w-full h-48 object-cover">
+                  <div class="involvement-content">
+                    <h3 class="text-xl font-semibold mb-2">School Programs</h3>
+                    <p class="text-gray-300 mb-3">Request awareness sessions for your educational institution</p>
+                    <button class="btn btn-sm btn-effect btn-learn text-white px-4 py-2 rounded-lg">Request
+                      Program</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4">
+                <div class="involvement-card">
+                  <img src="https://source.unsplash.com/random/600x400/?community,event" alt="Community Event"
+                    class="w-full h-48 object-cover">
+                  <div class="involvement-content">
+                    <h3 class="text-xl font-semibold mb-2">Community Events</h3>
+                    <p class="text-gray-300 mb-3">Find upcoming anti-drug events and campaigns in your area</p>
+                    <button class="btn btn-sm btn-effect btn-learn text-white px-4 py-2 rounded-lg">View
+                      Calendar</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4">
+                <div class="involvement-card">
+                  <img src="https://source.unsplash.com/random/600x400/?youth,mentoring" alt="Peer Mentoring"
+                    class="w-full h-48 object-cover">
+                  <div class="involvement-content">
+                    <h3 class="text-xl font-semibold mb-2">Peer Mentoring</h3>
+                    <p class="text-gray-300 mb-3">Become a mentor for youth at risk or in early recovery stages</p>
+                    <button class="btn btn-sm btn-effect btn-learn text-white px-4 py-2 rounded-lg">Join
+                      Program</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4">
+                <div class="involvement-card">
+                  <img src="https://source.unsplash.com/random/600x400/?digital,campaign" alt="Digital Advocacy"
+                    class="w-full h-48 object-cover">
+                  <div class="involvement-content">
+                    <h3 class="text-xl font-semibold mb-2">Digital Advocacy</h3>
+                    <p class="text-gray-300 mb-3">Help spread awareness through social media and digital campaigns</p>
+                    <button class="btn btn-sm btn-effect btn-learn text-white px-4 py-2 rounded-lg">Get Started</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4">
+                <div class="involvement-card">
+                  <img src="https://source.unsplash.com/random/600x400/?fundraising" alt="Fundraising"
+                    class="w-full h-48 object-cover">
+                  <div class="involvement-content">
+                    <h3 class="text-xl font-semibold mb-2">Fundraising</h3>
+                    <p class="text-gray-300 mb-3">Organize events to support our prevention and rehabilitation programs
+                    </p>
+                    <button class="btn btn-sm btn-effect btn-learn text-white px-4 py-2 rounded-lg">Learn How</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="scroll-section py-20 px-4 bg-gray-900">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 fade-up">
+                <h2 class="text-3xl font-semibold mb-6">Contact Us</h2>
+                <p class="text-gray-300 mb-8">
+                  Have questions or want to join our movement? Reach out to us through any of the channels below.
+                </p>
+
+                <div class="mb-6 flex items-start">
+                  <div class="text-blue-500 mr-3">
+                    <i class="fas fa-map-marker-alt text-2xl"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold mb-1">Headquarters</h3>
+                    <p class="text-gray-400">Youth Against Addiction National Office, New Delhi 110001</p>
+                  </div>
+                </div>
+
+                <div class="mb-6 flex items-start">
+                  <div class="text-blue-500 mr-3">
+                    <i class="fas fa-phone-alt text-2xl"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold mb-1">Phone</h3>
+                    <p class="text-gray-400">General: 011-2345-6789</p>
+                    <p class="text-gray-400">Helpline: 1800-YOUTH-HELP (Toll Free)</p>
+                  </div>
+                </div>
+
+                <div class="mb-6 flex items-start">
+                  <div class="text-blue-500 mr-3">
+                    <i class="fas fa-envelope text-2xl"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold mb-1">Email</h3>
+                    <p class="text-gray-400">info@youthagainstaddiction.org</p>
+                    <p class="text-gray-400">join@youthagainstaddiction.org</p>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <h3 class="font-semibold mb-3">Follow Us</h3>
+                  <div class="flex gap-4">
+                    <a href="#"
+                      class="bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-blue-700">
+                      <i class="fab fa-facebook-f text-white"></i>
+                    </a>
+                    <a href="#"
+                      class="bg-sky-500 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-sky-600">
+                      <i class="fab fa-twitter text-white"></i>
+                    </a>
+                    <a href="#"
+                      class="bg-red-600 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-red-700">
+                      <i class="fab fa-youtube text-white"></i>
+                    </a>
+                    <a href="#"
+                      class="bg-pink-600 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-pink-700">
+                      <i class="fab fa-instagram text-white"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6 mt-8 mt-lg-0 fade-up" data-delay="200">
+                <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                  <h3 class="text-2xl font-semibold mb-4">Send Us a Message</h3>
+                  <form>
+                    <div class="mb-4">
+                      <label for="name" class="block text-gray-400 mb-2">Name</label>
+                      <input type="text" id="name" class="form-control bg-gray-700 border-0 text-white"
+                        placeholder="Your name">
+                    </div>
+
+                    <div class="mb-4">
+                      <label for="email" class="block text-gray-400 mb-2">Email</label>
+                      <input type="email" id="email" class="form-control bg-gray-700 border-0 text-white"
+                        placeholder="Your email">
+                    </div>
+
+                    <div class="mb-4">
+                      <label for="subject" class="block text-gray-400 mb-2">Subject</label>
+                      <select id="subject" class="form-select bg-gray-700 border-0 text-white">
+                        <option selected>Choose a subject</option>
+                        <option>Report Drug Activity</option>
+                        <option>Request for Information</option>
+                        <option>School Program Request</option>
+                        <option>Volunteer Inquiries</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-4">
+                      <label for="message" class="block text-gray-400 mb-2">Message</label>
+                      <textarea id="message" rows="5" class="form-control bg-gray-700 border-0 text-white"
+                        placeholder="Your message"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-effect btn-learn text-white w-full py-3 rounded-lg font-bold">
+                      <i class="fas fa-paper-plane me-2"></i>Send Message
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="scroll-section bg-gray-900 py-12 border-t border-gray-800">
+          <div class="container">
+            <!-- Partners Section -->
+            <div class="mb-12">
+              <h2 class="text-2xl font-semibold mb-10 text-center">Our Partners</h2>
+
+              <div class="row g-4 justify-content-center">
+                <div class="col-4 col-md-2 text-center">
+                  <div class="partner-logo mx-auto">
+                    <i class="fas fa-hospital-alt text-blue-500 text-3xl"></i>
+                  </div>
+                  <p class="mt-3 text-sm">Health Department</p>
+                </div>
+
+                <div class="col-4 col-md-2 text-center">
+                  <div class="partner-logo mx-auto">
+                    <i class="fas fa-graduation-cap text-yellow-500 text-3xl"></i>
+                  </div>
+                  <p class="mt-3 text-sm">Education Dept</p>
+                </div>
+
+                <div class="col-4 col-md-2 text-center">
+                  <div class="partner-logo mx-auto">
+                    <i class="fas fa-users text-green-500 text-3xl"></i>
+                  </div>
+                  <p class="mt-3 text-sm">Social Welfare</p>
+                </div>
+
+                <div class="col-4 col-md-2 text-center">
+                  <div class="partner-logo mx-auto">
+                    <i class="fas fa-hand-holding-heart text-red-500 text-3xl"></i>
+                  </div>
+                  <p class="mt-3 text-sm">NGO Alliance</p>
+                </div>
+
+                <div class="col-4 col-md-2 text-center">
+                  <div class="partner-logo mx-auto">
+                    <i class="fas fa-building text-purple-500 text-3xl"></i>
+                  </div>
+                  <p class="mt-3 text-sm">Local Govt</p>
+                </div>
+
+                <div class="col-4 col-md-2 text-center">
+                  <div class="partner-logo mx-auto">
+                    <i class="fas fa-comments text-teal-500 text-3xl"></i>
+                  </div>
+                  <p class="mt-3 text-sm">Youth Forum</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Content -->
+            <div class="border-t border-gray-800 pt-12">
+              <div class="row">
+                <div class="col-md-4 mb-6 mb-md-0">
+                  <div class="flex items-center mb-4">
+                    <i class="fas fa-fist-raised text-3xl text-blue-500 me-2"></i>
+                    <h3 class="text-xl font-bold">Youth Against Addiction</h3>
+                  </div>
+                  <p class="text-gray-400 mb-4">
+                    Committed to creating a drug-free society through youth empowerment, peer education, and community
+                    action.
+                  </p>
+                  <p class="text-gray-500 text-sm">
+                    © 2025 Youth Against Addiction. All rights reserved.
+                  </p>
+                </div>
+
+                <div class="col-md-2 col-6 mb-6 mb-md-0">
+                  <h4 class="font-semibold mb-4">Quick Links</h4>
+                  <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#home"
+                        class="text-gray-400 hover:text-blue-500 transition-colors">Home</a></li>
+                    <li class="mb-2"><a href="#mission" class="text-gray-400 hover:text-blue-500 transition-colors">Our
+                        Mission</a></li>
+                    <li class="mb-2"><a href="#drug-effects"
+                        class="text-gray-400 hover:text-blue-500 transition-colors">Drug Effects</a></li>
+                    <li class="mb-2"><a href="#resources"
+                        class="text-gray-400 hover:text-blue-500 transition-colors">Resources</a></li>
+                    <li><a href="#contact" class="text-gray-400 hover:text-blue-500 transition-colors">Contact</a></li>
+                  </ul>
+                </div>
+
+                <div class="col-md-2 col-6 mb-6 mb-md-0">
+                  <h4 class="font-semibold mb-4">Resources</h4>
+                  <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#"
+                        class="text-gray-400 hover:text-blue-500 transition-colors">Helplines</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">Support
+                        Centers</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">Educational
+                        Materials</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">Recovery
+                        Programs</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">Legal Information</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="col-md-4">
+                  <h4 class="font-semibold mb-4">Subscribe to Updates</h4>
+                  <p class="text-gray-400 mb-4">
+                    Stay informed about our campaigns and initiatives.
+                  </p>
+                  <form class="flex">
+                    <input type="email" placeholder="Your email" class="form-control bg-gray-800 border-0 text-white">
+                    <button type="submit" class="btn btn-blue text-white px-4 ms-2">
+                      <i class="fas fa-arrow-right"></i>
+                    </button>
+                  </form>
+                  <p class="text-gray-500 text-sm mt-4">
+                    We respect your privacy. Unsubscribe at any time.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div> <!-- End of horizontal-content -->
+    </div> <!-- End of horizontal-wrapper -->
+  </div> <!-- End of main-container -->
 
   <!-- Scroll to Top Button -->
-  <button id="scrollToTop" class="fixed bottom-6 right-6 bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all opacity-0 pointer-events-none">
+  <button id="scrollToTop"
+    class="fixed bottom-6 right-6 bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all opacity-0 pointer-events-none">
     <i class="fas fa-chevron-up"></i>
   </button>
 
@@ -1290,13 +1717,179 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     // Scroll Reveal Animations
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+      // Setup for horizontal movement with vertical scroll
+      const horizontalContent = document.querySelector('.horizontal-content');
+      const sections = document.querySelectorAll('.scroll-section');
+      const scrollNav = document.querySelectorAll('.scroll-nav a');
+      const transitionLeft = document.querySelector('.transition-left');
+      const transitionRight = document.querySelector('.transition-right');
+      const cornerAnimations = document.querySelectorAll('.corner-animation');
+
+      // Calculate total width
+      let totalWidth = 0;
+      sections.forEach(section => {
+        totalWidth += window.innerWidth;
+      });
+      horizontalContent.style.width = `${totalWidth}px`;
+
+      // GSAP ScrollTrigger for horizontal movement
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Create a ScrollTrigger for each section
+      sections.forEach((section, index) => {
+        // Skip the last section
+        if (index < sections.length - 1) {
+          // Create a ScrollTrigger for this section
+          ScrollTrigger.create({
+            trigger: section,
+            start: 'bottom bottom', // When the bottom of the section reaches the bottom of the viewport
+            onEnter: () => {
+              // Only move to next section if we've scrolled to the bottom of the current one
+              if (section.scrollHeight <= section.clientHeight ||
+                section.scrollTop + section.clientHeight >= section.scrollHeight - 50) {
+                moveToNextSection(index);
+              }
+            }
+          });
+        }
+      });
+
+      // Main horizontal scroll timeline
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.horizontal-wrapper',
+          pin: true,
+          start: 'top top',
+          end: () => `+=${totalWidth}`,
+          scrub: 1,
+          onUpdate: (self) => {
+            updateNavDots(self.progress);
+            checkSectionTransition(self.progress);
+          }
+        }
+      });
+
+      tl.to('.horizontal-content', {
+        x: () => -(totalWidth - window.innerWidth),
+        ease: 'none'
+      });
+
+      // Function to move to the next section
+      function moveToNextSection(currentIndex) {
+        const nextIndex = currentIndex + 1;
+        if (nextIndex < sections.length) {
+          // Show transition effects
+          transitionLeft.classList.add('transition-active');
+          transitionRight.classList.add('transition-active');
+
+          // Animate corners
+          cornerAnimations.forEach(corner => {
+            // Reset animation
+            corner.style.opacity = 0;
+            corner.style.transform = 'scale(0)';
+
+            // Trigger animation
+            setTimeout(() => {
+              corner.style.opacity = 1;
+              corner.style.transform = 'scale(1)';
+
+              // Fade out after animation completes
+              setTimeout(() => {
+                corner.style.opacity = 0;
+              }, 600);
+            }, 100);
+          });
+
+          // Calculate progress for the next section
+          const progress = nextIndex / (sections.length - 1);
+          const scrollTrigger = ScrollTrigger.getAll()[0];
+          const totalScroll = scrollTrigger.end - scrollTrigger.start;
+
+          // Scroll to the next section
+          window.scrollTo({
+            top: scrollTrigger.start + (totalScroll * progress),
+            behavior: 'smooth'
+          });
+
+          // Hide transition effects after animation
+          setTimeout(() => {
+            transitionLeft.classList.remove('transition-active');
+            transitionRight.classList.remove('transition-active');
+          }, 1000);
+        }
+      }
+
+      // Update navigation dots
+      function updateNavDots(progress) {
+        const sectionCount = sections.length;
+        const sectionIndex = Math.min(
+          Math.floor(progress * sectionCount),
+          sectionCount - 1
+        );
+
+        scrollNav.forEach(nav => nav.classList.remove('active'));
+        scrollNav[sectionIndex].classList.add('active');
+      }
+
+      // Check if we're transitioning between sections
+      function checkSectionTransition(progress) {
+        const sectionCount = sections.length;
+        const exactIndex = progress * sectionCount;
+        const fractionalPart = exactIndex - Math.floor(exactIndex);
+
+        // If we're in the middle of transitioning between sections (fractional part between 0.1 and 0.9)
+        if (fractionalPart > 0.1 && fractionalPart < 0.9) {
+          transitionLeft.classList.add('transition-active');
+          transitionRight.classList.add('transition-active');
+        } else {
+          transitionLeft.classList.remove('transition-active');
+          transitionRight.classList.remove('transition-active');
+        }
+      }
+
+      // Handle nav dot clicks
+      scrollNav.forEach((dot, index) => {
+        dot.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          // Show transition effects
+          transitionLeft.classList.add('transition-active');
+          transitionRight.classList.add('transition-active');
+
+          // Animate corners
+          cornerAnimations.forEach(corner => {
+            corner.style.opacity = 1;
+            corner.style.transform = 'scale(1)';
+
+            setTimeout(() => {
+              corner.style.opacity = 0;
+            }, 600);
+          });
+
+          const progress = index / (sections.length - 1);
+          const scrollTrigger = ScrollTrigger.getAll()[0];
+          const totalScroll = scrollTrigger.end - scrollTrigger.start;
+
+          window.scrollTo({
+            top: scrollTrigger.start + (totalScroll * progress),
+            behavior: 'smooth'
+          });
+
+          // Hide transition effects after animation
+          setTimeout(() => {
+            transitionLeft.classList.remove('transition-active');
+            transitionRight.classList.remove('transition-active');
+          }, 1000);
+        });
+      });
+
       // Mark body as JS-loaded to prevent fallback animations
       document.body.classList.add('js-loaded');
-      
+
       // Ensure all fade-up elements are visible
-      setTimeout(function() {
-        document.querySelectorAll('.fade-up').forEach(function(el) {
+      setTimeout(function () {
+        document.querySelectorAll('.fade-up').forEach(function (el) {
           el.classList.add('visible');
         });
       }, 500);
@@ -1307,24 +1900,24 @@
         duration: 1000,
         reset: true
       });
-      
+
       // Reveal elements with fade-up class
-      sr.reveal('.fade-up', { 
-        interval: 100 
+      sr.reveal('.fade-up', {
+        interval: 100
       });
-      
+
       // Stats counter animation
       const counters = document.querySelectorAll('.count-up');
       const speed = 200;
-      
+
       function animateCounters() {
         counters.forEach(counter => {
           const target = +counter.getAttribute('data-count');
           let count = 0;
           const increment = target / speed;
-          
+
           const updateCount = () => {
-            if(count < target) {
+            if (count < target) {
               count += increment;
               counter.innerText = Math.ceil(count);
               setTimeout(updateCount, 1);
@@ -1332,11 +1925,11 @@
               counter.innerText = target;
             }
           };
-          
+
           updateCount();
         });
       }
-      
+
       // Initialize chart
       const ctx = document.getElementById('factsChart').getContext('2d');
       const factsChart = new Chart(ctx, {
@@ -1390,28 +1983,28 @@
           }
         }
       });
-      
+
       // Horizontal scroll section
       const horizontalSection = document.querySelector('.horizontal-scroll-section');
       const horizontalContainer = document.querySelector('.horizontal-scroll-container');
       const panels = document.querySelectorAll('.horizontal-scroll-panel');
       const totalPanels = panels.length;
-      
+
       let currentPanel = 0;
       let scrolling = false;
       let startX, startY;
-      
+
       function updateHorizontalScroll() {
         const translateX = -currentPanel * 100;
         horizontalContainer.style.transform = `translateX(${translateX}vw)`;
       }
-      
+
       horizontalSection.addEventListener('wheel', (e) => {
         if (scrolling) return;
-        
+
         scrolling = true;
         setTimeout(() => { scrolling = false; }, 800);
-        
+
         if (e.deltaY > 0 && currentPanel < totalPanels - 1) {
           currentPanel++;
           updateHorizontalScroll();
@@ -1420,23 +2013,23 @@
           updateHorizontalScroll();
         }
       });
-      
+
       // For touch devices
       horizontalSection.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
       });
-      
+
       horizontalSection.addEventListener('touchmove', (e) => {
         if (!startX || !startY) return;
-        
+
         const diffX = startX - e.touches[0].clientX;
         const diffY = startY - e.touches[0].clientY;
-        
+
         // If horizontal swipe is more significant than vertical scroll
         if (Math.abs(diffX) > Math.abs(diffY)) {
           e.preventDefault();
-          
+
           if (diffX > 50 && currentPanel < totalPanels - 1) {
             currentPanel++;
             updateHorizontalScroll();
@@ -1450,35 +2043,35 @@
           }
         }
       });
-      
+
       // FAQ toggle
       // Ensure all FAQ bodies are properly initialized
-      document.querySelectorAll('.faq-body').forEach(function(body) {
+      document.querySelectorAll('.faq-body').forEach(function (body) {
         body.style.maxHeight = '0px';
       });
-      
-      window.toggleFAQ = function(element) {
+
+      window.toggleFAQ = function (element) {
         const body = element.nextElementSibling;
         const icon = element.querySelector('i');
-        
+
         if (body.classList.contains('active')) {
           body.classList.remove('active');
           icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
         } else {
           const activeBodies = document.querySelectorAll('.faq-body.active');
           const activeIcons = document.querySelectorAll('.faq-header i.fa-chevron-up');
-          
+
           activeBodies.forEach(item => item.classList.remove('active'));
           activeIcons.forEach(item => item.classList.replace('fa-chevron-up', 'fa-chevron-down'));
-          
+
           body.classList.add('active');
           icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
         }
       };
-      
+
       // Scroll to top button
       const scrollToTopBtn = document.getElementById('scrollToTop');
-      
+
       window.addEventListener('scroll', () => {
         if (window.pageYOffset > 300) {
           scrollToTopBtn.style.opacity = '1';
@@ -1488,31 +2081,31 @@
           scrollToTopBtn.style.pointerEvents = 'none';
         }
       });
-      
+
       scrollToTopBtn.addEventListener('click', () => {
         window.scrollTo({
           top: 0,
           behavior: 'smooth'
         });
       });
-      
+
       // Trigger animations when scrolled into view
       const statsSection = document.querySelector('#statsSection');
       let animatedStats = false;
-      
+
       window.addEventListener('scroll', () => {
         const statsTop = statsSection ? statsSection.getBoundingClientRect().top : 0;
         const windowHeight = window.innerHeight;
-        
+
         if (statsTop < windowHeight && !animatedStats && statsSection) {
           animateCounters();
           animatedStats = true;
         }
       });
-      
+
       // Initialize GSAP ScrollTrigger
       gsap.registerPlugin(ScrollTrigger);
-      
+
       // Hero section parallax effect
       gsap.to('.hero-overlay', {
         backgroundPosition: '50% 100%',
@@ -1524,31 +2117,31 @@
           scrub: true
         }
       });
-      
+
       // Hero content animation
-      gsap.from('.hero-title', { 
-        duration: 1, 
-        y: 50, 
+      gsap.from('.hero-title', {
+        duration: 1,
+        y: 50,
         opacity: 0,
         ease: 'power3.out'
       });
-      
-      gsap.from('.hero-subtitle', { 
-        duration: 1, 
-        y: 50, 
+
+      gsap.from('.hero-subtitle', {
+        duration: 1,
+        y: 50,
         opacity: 0,
         delay: 0.3,
         ease: 'power3.out'
       });
-      
-      gsap.from('.hero-text', { 
-        duration: 1, 
-        y: 50, 
+
+      gsap.from('.hero-text', {
+        duration: 1,
+        y: 50,
         opacity: 0,
         delay: 0.6,
         ease: 'power3.out'
       });
-      
+
       // Stagger animation for navbar items
       gsap.from('.nav-item', {
         duration: 0.5,
@@ -1561,4 +2154,5 @@
     });
   </script>
 </body>
+
 </html>
