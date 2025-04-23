@@ -36,9 +36,20 @@
 
     /* Ensure content is properly visible */
     .scroll-section .container {
-      padding: 4rem 1rem;
+      padding: 2rem 1rem;
       position: relative;
       z-index: 2;
+    }
+    
+    /* Improve heading visibility on mobile */
+    @media (max-width: 768px) {
+      .scroll-section .container {
+        padding-top: 1rem;
+      }
+      
+      h1, h2, h3 {
+        margin-top: 0.5rem;
+      }
     }
 
     /* Fix scroll section layout */
@@ -53,12 +64,22 @@
       scroll-snap-align: start;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       /* Hide scrollbars but keep scrolling functionality */
       -ms-overflow-style: none;
       /* IE and Edge */
       scrollbar-width: none;
       /* Firefox */
+      touch-action: pan-y;
+      /* Enable vertical touch scrolling */
+    }
+    
+    /* Adjust padding for mobile */
+    @media (max-width: 768px) {
+      .scroll-section {
+        padding-top: 70px;
+        justify-content: flex-start;
+      }
     }
 
     /* Hide scrollbar for Chrome, Safari and Opera */
@@ -129,6 +150,13 @@
       display: flex;
       height: 100%;
       will-change: transform;
+    }
+    
+    /* Mobile optimization */
+    @media (max-width: 768px) {
+      .horizontal-content {
+        touch-action: pan-x pan-y;
+      }
     }
 
     /* Section transition effects */
@@ -363,10 +391,18 @@
 
     /* Timeline section */
     #timeline {
-      padding-top: 6rem;
+      padding-top: 4rem;
       scroll-snap-align: none; /* Prevent scroll snapping */
       scroll-behavior: auto; /* Use default scroll behavior */
-      overflow: visible; /* Ensure content is visible */
+      overflow-y: auto; /* Enable vertical scrolling */
+      max-height: 100vh; /* Limit height to viewport */
+    }
+    
+    @media (max-width: 768px) {
+      #timeline {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+      }
     }
     
     /* Timeline styling */
@@ -462,12 +498,32 @@
     }
     
     @media (max-width: 575.98px) {
+      /* Make timeline section scrollable vertically */
+      #timeline {
+        overflow-y: auto;
+        max-height: 100vh;
+        padding-top: 100px;
+      }
+      
       .timeline::after {
         left: 20px;
       }
       
+      /* Position all timeline items on the right */
       .timeline-container {
-        padding-left: 50px;
+        padding-bottom: 20px;
+        width: calc(100% - 60px);
+        left: 60px !important;
+        right: auto !important;
+      }
+      
+      .timeline-content {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+      
+      .timeline-container {
+        padding-left: 15px;
         padding-right: 15px;
       }
       
@@ -475,6 +531,14 @@
         left: 10px;
         width: 15px;
         height: 15px;
+      }
+      
+      /* Adjust arrows for all items to point from the left */
+      .timeline-container.left::before,
+      .timeline-container.right::before {
+        left: -15px;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent #3b82f6 transparent transparent;
       }
     }
 
@@ -885,10 +949,24 @@
 
     /* Chart styles */
     #factsChart {
-      max-width: 400px;
-      height: 400px;
+      max-width: 100%;
+      height: auto;
       margin: 0 auto;
       background: transparent;
+    }
+    
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    @media (max-width: 576px) {
+      .chart-container {
+        max-width: 280px;
+        height: 280px;
+      }
     }
 
     /* Section backgrounds */
@@ -1060,8 +1138,14 @@
     /* Drug effects section */
     .drug-effects-section {
       position: relative;
-      padding: 6rem 0;
-      overflow: hidden;
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+    
+    @media (max-width: 768px) {
+      .drug-effects-section {
+        padding-bottom: 30px;
+      }
     }
 
     .drug-effects-bg {
@@ -1572,7 +1656,7 @@
               </div>
               <div class="col-lg-6 mt-5 mt-lg-0">
                 <div class="fade-up" data-delay="200">
-                  <div class="relative h-96">
+                  <div class="chart-container">
                     <canvas id="factsChart"></canvas>
                   </div>
                 </div>
@@ -2365,6 +2449,11 @@
                 section.scrollTop + section.clientHeight >= section.scrollHeight - 50) {
                 moveToNextSection(index);
               }
+            },
+            // Prevent issues on mobile
+            onLeaveBack: () => {
+              // Prevent accidental triggers when scrolling back up
+              return false;
             }
           });
         }
@@ -2391,7 +2480,15 @@
           },
           // Prevent scroll issues
           preventOverlaps: true,
-          fastScrollEnd: true
+          fastScrollEnd: true,
+          // Ensure content is visible after scrolling
+          onEnterBack: (self) => {
+            // Scroll to top of section when going back
+            const currentIndex = Math.round(self.progress * (sections.length - 1));
+            if (sections[currentIndex]) {
+              sections[currentIndex].scrollTop = 0;
+            }
+          }
         }
       });
 
@@ -2523,6 +2620,27 @@
           el.classList.add('visible');
         });
       }, 500);
+      // Mobile navigation handling
+      document.addEventListener('DOMContentLoaded', function() {
+        // Handle mobile nav toggle
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const navbarCollapse = document.getElementById('navbarNav');
+        
+        if (navbarToggler) {
+          navbarToggler.addEventListener('click', function() {
+            navbarCollapse.classList.toggle('show');
+          });
+        }
+        
+        // Close mobile menu when clicking on nav links
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+        navLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            navbarCollapse.classList.remove('show');
+          });
+        });
+      });
+      
       // Initialize ScrollReveal
       const sr = ScrollReveal({
         origin: 'bottom',
