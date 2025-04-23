@@ -272,6 +272,25 @@
       transition: all 0.3s ease;
       border-left: 4px solid #3b82f6;
     }
+    
+    .involvement-card {
+      transition: all 0.3s ease;
+      background-color: rgba(17, 24, 39, 0.8);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .involvement-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .involvement-content {
+      padding: 1.25rem;
+    }
 
     .stat-card:hover {
       transform: translateY(-5px);
@@ -280,13 +299,13 @@
 
     /* Hero section */
     .hero-overlay {
-      /* background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.pexels.com/photos/48566/pexels-photo-48566.jpeg?auto=compress&cs=tinysrgb&w=600') center/cover no-repeat fixed; */
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
+      text-align: center;
     }
 
     .hero-overlay img {
@@ -303,6 +322,521 @@
     .hero-overlay .container {
       position: relative;
       z-index: 2;
+      max-width: 90%;
+      padding: 0 15px;
+    }
+    
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+    
+    .hero-text {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      background-color: rgba(17, 24, 39, 0.95);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    /* Section padding for navbar */
+    .scroll-section {
+      padding-top: 5rem;
+    }
+
+    /* Timeline section */
+    #timeline {
+      padding-top: 6rem;
+      scroll-snap-align: none; /* Prevent scroll snapping */
+      scroll-behavior: auto; /* Use default scroll behavior */
+      overflow: visible; /* Ensure content is visible */
+    }
+    
+    /* Timeline styling */
+    .timeline {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      background-color: #4F46E5;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -3px;
+    }
+    
+    .timeline-container {
+      padding: 10px 40px;
+      position: relative;
+      background-color: inherit;
+      width: 50%;
+    }
+    
+    .timeline-container.left {
+      left: 0;
+    }
+    
+    .timeline-container.right {
+      left: 50%;
+    }
+    
+    .timeline-content {
+      padding: 20px 30px;
+      background-color: rgba(31, 41, 55, 0.8);
+      position: relative;
+      border-radius: 6px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Timeline dots */
+    .timeline-container::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      right: -10px;
+      background-color: #4F46E5;
+      border: 4px solid #1E293B;
+      top: 15px;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    
+    .timeline-container.right::after {
+      left: -10px;
+    }
+    
+    /* Timeline mobile responsiveness */
+    @media (max-width: 767.98px) {
+      .timeline::after {
+        left: 31px;
+      }
+      
+      .timeline-container {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+        margin-bottom: 20px;
+      }
+      
+      .timeline-container.left,
+      .timeline-container.right {
+        left: 0;
+      }
+      
+      .timeline-container::after {
+        left: 21px;
+        right: auto;
+      }
+      
+      .timeline-content {
+        padding: 15px 20px;
+      }
+      
+      .timeline-content h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+    }
+    
+    @media (max-width: 575.98px) {
+      .timeline::after {
+        left: 20px;
+      }
+      
+      .timeline-container {
+        padding-left: 50px;
+        padding-right: 15px;
+      }
+      
+      .timeline-container::after {
+        left: 10px;
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 991.98px) {
+      .navbar-collapse {
+        background-color: rgba(17, 24, 39, 0.95);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .navbar-nav .nav-link {
+        padding: 0.75rem 1rem;
+        margin: 0;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.75rem;
+      }
+      
+      /* Timeline responsive adjustments */
+      .timeline::after {
+        left: 31px;
+      }
+      
+      .timeline-container {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+      }
+
+      .timeline-container.left,
+      .timeline-container.right {
+        left: 0;
+      }
+      
+      /* Card responsive adjustments */
+      .stat-card {
+        margin-bottom: 1.5rem;
+        padding: 1.25rem;
+      }
+      
+      .involvement-card {
+        margin-bottom: 2rem;
+      }
+      
+      /* Text responsive adjustments */
+      h2 {
+        font-size: 2.25rem;
+      }
+      
+      h3 {
+        font-size: 1.75rem;
+      }
+      
+      p {
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.75rem;
+      }
+
+      .hero-text {
+        font-size: 1.1rem;
+        max-width: 100%;
+        padding: 0 10px;
+      }
+      
+      .hero-overlay .container {
+        max-width: 95%;
+      }
+      
+      .hero-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      
+      .hero-buttons .btn {
+        width: 80%;
+        max-width: 250px;
+      }
+
+      .btn {
+        margin-bottom: 0.5rem;
+      }
+      
+      /* Card adjustments for medium screens */
+      .stat-card {
+        padding: 1rem;
+        margin-bottom: 1.25rem;
+      }
+      
+      .stat-number {
+        font-size: 2.25rem;
+      }
+      
+      .involvement-card {
+        margin-bottom: 1.5rem;
+      }
+      
+      .involvement-content {
+        padding: 1rem;
+      }
+      
+      /* Timeline adjustments */
+      .timeline-container {
+        padding-left: 60px;
+        padding-right: 20px;
+      }
+      
+      .timeline-content {
+        padding: 15px 20px;
+      }
+
+      /* Text size adjustments */
+      h2, .section-title {
+        font-size: 2rem;
+      }
+      
+      h3 {
+        font-size: 1.5rem;
+      }
+      
+      p, li {
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+      
+      .mission-section h2,
+      .impact-section h2,
+      .resources-section h2,
+      .testimonials-section h2,
+      .faq-section h2 {
+        font-size: 2rem;
+      }
+
+      .mission-section p,
+      .impact-section p,
+      .resources-section p,
+      .testimonials-section p,
+      .faq-section p {
+        font-size: 1rem;
+      }
+      
+      /* Adjust spacing */
+      .py-20 {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+      
+      .mb-12 {
+        margin-bottom: 2rem;
+      }
+    }
+
+    /* Footer styles */
+    .footer {
+      padding: 3rem 0 1.5rem;
+    }
+    
+    .footer h4 {
+      margin-bottom: 1.25rem;
+      font-size: 1.25rem;
+    }
+    
+    .footer ul li {
+      margin-bottom: 0.75rem;
+    }
+    
+    @media (max-width: 767.98px) {
+      .footer [class*="col-"] {
+        margin-bottom: 2rem;
+      }
+      
+      .footer h4 {
+        margin-bottom: 1rem;
+      }
+      
+      .footer form {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .footer form input {
+        margin-bottom: 0.5rem;
+      }
+    }
+    
+    @media (max-width: 575.98px) {
+      /* Navbar adjustments */
+      .navbar-brand span {
+        font-size: 1.2rem;
+      }
+      
+      .navbar {
+        padding: 0.75rem 0;
+      }
+      
+      /* Hero section adjustments */
+      .hero-title {
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
+      }
+
+      .hero-subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+      }
+      
+      .hero-text {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+        padding: 0 5px;
+      }
+      
+      .hero-overlay {
+        height: 90vh;
+      }
+      
+      .hero-overlay .container {
+        max-width: 100%;
+        padding: 0 10px;
+      }
+      
+      .hero-buttons .btn {
+        width: 90%;
+        max-width: 220px;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+      
+      /* Section title adjustments */
+      .mission-section h2,
+      .impact-section h2,
+      .resources-section h2,
+      .testimonials-section h2,
+      .faq-section h2 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+      }
+      
+      /* Timeline adjustments for smartphones */
+      .timeline::after {
+        left: 20px;
+      }
+      
+      .timeline-container {
+        padding-left: 45px;
+        padding-right: 15px;
+        margin-bottom: 1rem;
+      }
+      
+      .timeline-content {
+        padding: 12px 15px;
+      }
+
+      .timeline-content h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-content p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+      
+      /* Card adjustments for smartphones */
+      .stat-card {
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      
+      .stat-number {
+        font-size: 1.75rem;
+        margin-bottom: 0.25rem;
+      }
+      
+      .stat-label {
+        font-size: 0.9rem;
+      }
+      
+      .involvement-card {
+        margin-bottom: 1.25rem;
+      }
+      
+      .involvement-card img {
+        height: 150px;
+      }
+      
+      .involvement-content {
+        padding: 0.75rem;
+      }
+      
+      .involvement-content h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .involvement-content p {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      /* Text size global adjustments */
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      h3 {
+        font-size: 1.25rem;
+      }
+      
+      h4 {
+        font-size: 1.1rem;
+      }
+      
+      p, li {
+        font-size: 0.85rem;
+        line-height: 1.4;
+      }
+      
+      /* Spacing adjustments */
+      .py-20 {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+      }
+      
+      .mb-12 {
+        margin-bottom: 1.5rem;
+      }
+      
+      .mb-6 {
+        margin-bottom: 1rem;
+      }
+      
+      .px-4 {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
     }
 
     /* Button effects */
@@ -1819,8 +2353,8 @@
 
       // Create a ScrollTrigger for each section
       sections.forEach((section, index) => {
-        // Skip the last section
-        if (index < sections.length - 1) {
+        // Skip the last section and the timeline section (which has id="timeline")
+        if (index < sections.length - 1 && section.id !== 'timeline') {
           // Create a ScrollTrigger for this section
           ScrollTrigger.create({
             trigger: section,
@@ -1847,7 +2381,17 @@
           onUpdate: (self) => {
             updateNavDots(self.progress);
             checkSectionTransition(self.progress);
-          }
+          },
+          // Add these properties to improve scrolling behavior
+          snap: {
+            snapTo: 1 / (sections.length - 1),
+            duration: { min: 0.2, max: 0.5 },
+            delay: 0.1,
+            ease: 'power1.inOut'
+          },
+          // Prevent scroll issues
+          preventOverlaps: true,
+          fastScrollEnd: true
         }
       });
 
@@ -1903,6 +2447,9 @@
 
       // Update navigation dots
       function updateNavDots(progress) {
+        // Check if scrollNav exists and has elements
+        if (!scrollNav || scrollNav.length === 0) return;
+        
         const sectionCount = sections.length;
         const sectionIndex = Math.min(
           Math.floor(progress * sectionCount),
@@ -1910,7 +2457,9 @@
         );
 
         scrollNav.forEach(nav => nav.classList.remove('active'));
-        scrollNav[sectionIndex].classList.add('active');
+        if (scrollNav[sectionIndex]) {
+          scrollNav[sectionIndex].classList.add('active');
+        }
       }
 
       // Check if we're transitioning between sections
@@ -2172,15 +2721,34 @@
 
       // Trigger animations when scrolled into view
       const statsSection = document.querySelector('#statsSection');
+      const involvementSection = document.querySelector('.involvement-section');
       let animatedStats = false;
 
       window.addEventListener('scroll', () => {
-        const statsTop = statsSection ? statsSection.getBoundingClientRect().top : 0;
-        const windowHeight = window.innerHeight;
+        // Stats section animation
+        if (statsSection) {
+          const statsTop = statsSection.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
 
-        if (statsTop < windowHeight && !animatedStats && statsSection) {
-          animateCounters();
-          animatedStats = true;
+          if (statsTop < windowHeight && !animatedStats) {
+            animateCounters();
+            animatedStats = true;
+          }
+        }
+        
+        // Involvement section animation
+        if (involvementSection) {
+          const involvementTop = involvementSection.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+          
+          if (involvementTop < windowHeight) {
+            const cards = involvementSection.querySelectorAll('.involvement-card');
+            cards.forEach((card, index) => {
+              setTimeout(() => {
+                card.classList.add('visible');
+              }, index * 150);
+            });
+          }
         }
       });
 
